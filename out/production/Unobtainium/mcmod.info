@@ -1,0 +1,17 @@
+[
+{
+  "modid": "Unobtainium",
+  "name": "Unobtainium",
+  "description": "Adding various impossible substances to Minecraft.",
+  "version": "1.7.0-1.0",
+  "mcversion": "1.7.10",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [ "QKninja" ],
+  "credits": "Created by QKninja",
+  "logoFile": "",
+  "parent":"",
+  "screenshots": [],
+  "dependencies": []
+}
+]
