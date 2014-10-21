@@ -5,5 +5,5 @@ package com.qkninja.unobtainium.proxy;
  */
 public interface IProxy
 {
-
+    public abstract void registerKeyBindings();
 }

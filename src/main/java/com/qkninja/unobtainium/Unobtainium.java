@@ -1,6 +1,10 @@
 package com.qkninja.unobtainium;
 
+import com.qkninja.unobtainium.client.handler.KeyInputEventHandler;
 import com.qkninja.unobtainium.handler.ConfigurationHandler;
+import com.qkninja.unobtainium.init.ModBlocks;
+import com.qkninja.unobtainium.init.ModItems;
+import com.qkninja.unobtainium.init.Recipes;
 import com.qkninja.unobtainium.proxy.IProxy;
 import com.qkninja.unobtainium.reference.Reference;
 import com.qkninja.unobtainium.utility.LogHelper;
@@ -30,14 +34,22 @@ public class Unobtainium
     {
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+
+        proxy.registerKeyBindings();
+
+        ModItems.init();
+
+        ModBlocks.init();
+
         LogHelper.info("Pre Initialization Complete!");
     }
 
     @Mod.EventHandler
     public void Init(FMLInitializationEvent event)
     {
+        FMLCommonHandler.instance().bus().register(new KeyInputEventHandler());
+        Recipes.init();
         LogHelper.info("Initialization Complete!");
-
     }
 
     @Mod.EventHandler

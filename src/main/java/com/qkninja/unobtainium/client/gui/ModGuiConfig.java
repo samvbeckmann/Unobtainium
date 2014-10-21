@@ -8,8 +8,9 @@ import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 
 /**
- * Created by Sam on 2014-10-07.
+ * @author QKninja
  */
+
 public class ModGuiConfig extends GuiConfig
 {
     public ModGuiConfig(GuiScreen guiScreen)

@@ -1,7 +1,7 @@
 invertYMouse:false
 mouseSensitivity:0.5
 fov:0.0
-gamma:0.0
+gamma:1.0
 saturation:0.0
 renderDistance:12
 guiScale:0
@@ -9,9 +9,9 @@ particles:0
 bobView:true
 anaglyph3d:false
 advancedOpengl:false
-maxFps:120
+maxFps:260
 fboEnable:true
-difficulty:2
+difficulty:0
 fancyGraphics:true
 ao:2
 clouds:true
@@ -38,7 +38,7 @@ chatHeightFocused:1.0
 chatHeightUnfocused:0.44366196
 chatScale:1.0
 chatWidth:1.0
-showInventoryAchievementHint:true
+showInventoryAchievementHint:false
 mipmapLevels:4
 anisotropicFiltering:1
 streamBytesPerPixel:0.5
@@ -85,6 +85,8 @@ key_key.hotbar.6:7
 key_key.hotbar.7:8
 key_key.hotbar.8:9
 key_key.hotbar.9:10
+key_keys.unobtainium.charge:46
+key_keys.unobtainium.release:19
 soundCategory_master:0.22847682
 soundCategory_music:1.0
 soundCategory_record:1.0
