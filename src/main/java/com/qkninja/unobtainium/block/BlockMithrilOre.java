@@ -1,6 +1,6 @@
 package com.qkninja.unobtainium.block;
 
-import com.qkninja.unobtainium.creativetab.CreativeTabUnobtainium;
+import com.qkninja.unobtainium.reference.Names;
 
 /**
  * @author QKninja
@@ -11,6 +11,6 @@ public class BlockMithrilOre extends BlockUnobtainium
     public BlockMithrilOre()
     {
         super();
-        this.setBlockName("mithrilOre");
+        this.setBlockName(Names.Blocks.MITHRIL_ORE);
     }
 }

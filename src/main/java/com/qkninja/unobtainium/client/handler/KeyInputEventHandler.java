@@ -26,9 +26,9 @@ public class KeyInputEventHandler
         return Key.UNKNOWN;
     }
 
-    @SubscribeEvent
-    public void handleKeyInputEvent(InputEvent.KeyInputEvent event)
-    {
-        LogHelper.info(getPressedKeybinding());
-    }
+//    @SubscribeEvent
+//    public void handleKeyInputEvent(InputEvent.KeyInputEvent event)
+//    {
+//        LogHelper.info(getPressedKeybinding());
+//    }
 }
