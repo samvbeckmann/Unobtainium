@@ -18,6 +18,7 @@ public class BlockUnobtainium extends Block
     {
         super(material);
         this.setCreativeTab(CreativeTabUnobtainium.UNOBTAINIUM_TAB);
+        this.setStepSound(soundTypePiston);
     }
 
     public BlockUnobtainium()

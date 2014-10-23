@@ -11,5 +11,7 @@ public class BlockAntiMetalOre extends BlockUnobtainium
     {
         super();
         this.setBlockName(Names.Blocks.ANTIMETAL_ORE);
+        this.setBlockUnbreakable();
+        this.setResistance(6000000.0F);
     }
 }
