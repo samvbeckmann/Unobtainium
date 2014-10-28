@@ -14,6 +14,6 @@ public class BlockPlastic extends BlockUnobtainium
         setBlockName(Names.Blocks.PLASTIC);
         setHardness(2.0F);
         setResistance(7.0F);
-        setStepSound(soundTypeSnow);
+        setStepSound(soundTypeMetal);
     }
 }
