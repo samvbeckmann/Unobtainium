@@ -1,15 +1,20 @@
 package com.qkninja.unobtainium.block;
 
 import com.qkninja.unobtainium.reference.Names;
+import net.minecraft.block.material.Material;
 
 /**
- * Created by Sam on 2014-10-23.
+ * @author QKninja
  */
+
 public class BlockCavorite extends BlockUnobtainium
 {
     public BlockCavorite()
     {
-        super();
-        this.setBlockName(Names.Blocks.CAVORITE);
+        super(Material.iron);
+        setBlockName(Names.Blocks.CAVORITE);
+        setHardness(4.0F);
+        setResistance(10.0F);
+        setStepSound(soundTypeMetal);
     }
 }

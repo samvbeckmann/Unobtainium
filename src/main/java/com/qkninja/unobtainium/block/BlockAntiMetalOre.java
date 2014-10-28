@@ -3,15 +3,16 @@ package com.qkninja.unobtainium.block;
 import com.qkninja.unobtainium.reference.Names;
 
 /**
- * Created by Sam on 2014-10-22.
+ * @author QKninja
  */
+
 public class BlockAntiMetalOre extends BlockUnobtainium
 {
     public BlockAntiMetalOre()
     {
         super();
-        this.setBlockName(Names.Blocks.ANTIMETAL_ORE);
-        this.setBlockUnbreakable();
-        this.setResistance(6000000.0F);
+        setBlockName(Names.Blocks.ANTIMETAL_ORE);
+        setBlockUnbreakable();
+        setResistance(6000000.0F);
     }
 }

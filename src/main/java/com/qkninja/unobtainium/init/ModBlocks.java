@@ -6,6 +6,7 @@ import com.qkninja.unobtainium.reference.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
+ * Initializes the blocks in the mod.
  * @author QKninja
  */
 
@@ -19,6 +20,8 @@ public class ModBlocks
     public static final BlockUnobtainium orichalcum = new BlockOrichalcum();
     public static final BlockUnobtainium galvorn = new BlockGalvorn();
     public static final BlockUnobtainium cavorite = new BlockCavorite();
+    public static final BlockUnobtainium oilResin = new BlockOilResin();
+    public static final BlockUnobtainium plastic = new BlockPlastic();
 
 
 
@@ -31,5 +34,7 @@ public class ModBlocks
         GameRegistry.registerBlock(orichalcum, Names.Blocks.ORICHALCUM);
         GameRegistry.registerBlock(galvorn, Names.Blocks.GALVORN);
         GameRegistry.registerBlock(cavorite, Names.Blocks.CAVORITE);
+        GameRegistry.registerBlock(oilResin, Names.Blocks.OIL_RESIN);
+        GameRegistry.registerBlock(plastic, Names.Blocks.PLASTIC);
     }
 }

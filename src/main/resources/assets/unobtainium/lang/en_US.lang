@@ -8,6 +8,10 @@ itemGroup.unobtainium=Unobtainium
 
 # Items
 item.unobtainium:lynguriumGem.name=Lyngurium Gem
+item.unobtainium:mithrilIngot.name=Mithril Ingot
+item.unobtainium:galvornIngot.name=Galvorn Ingot
+item.unobtainium:orichalcumIngot.name=Orichalcum Ingot
+item.unobtainium:cavoriteIngot.name=Cavorite Ingot
 
 # Blocks
 tile.unobtainium:mithrilOre.name=Mithril Ore

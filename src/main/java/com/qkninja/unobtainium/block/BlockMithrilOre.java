@@ -11,7 +11,8 @@ public class BlockMithrilOre extends BlockUnobtainium
     public BlockMithrilOre()
     {
         super();
-        this.setBlockName(Names.Blocks.MITHRIL_ORE);
-        this.setHardness(1.0F);
+        setBlockName(Names.Blocks.MITHRIL_ORE);
+        setHardness(3.0F);
+        setResistance(5.0F);
     }
 }

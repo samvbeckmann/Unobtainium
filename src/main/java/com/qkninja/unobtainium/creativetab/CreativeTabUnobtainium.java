@@ -6,8 +6,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 /**
- * Created by Sam on 2014-10-20.
+ * @author QKninja
  */
+
 public class CreativeTabUnobtainium
 {
     public static final CreativeTabs UNOBTAINIUM_TAB = new CreativeTabs(Reference.MOD_ID.toLowerCase())
@@ -15,7 +16,7 @@ public class CreativeTabUnobtainium
         @Override
         public Item getTabIconItem()
         {
-            return ModItems.LynguriumGem;
+            return ModItems.lynguriumGem;
         }
     };
 }
