@@ -47,6 +47,7 @@ public final class Names
         public static final String CAVORITE_INGOT = "cavoriteIngot";
         public static final String RESIN_CHUNK = "resinChunk";
         public static final String PLASTIC_CHUNK = "plasticChunk";
+        public static final String QUICKSILVER_BUCKET = "quicksilverBucket";
     }
 
     /**

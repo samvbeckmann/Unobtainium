@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
+import java.util.Random;
+
 /**
  * @author QKninja
  */
@@ -57,5 +59,15 @@ public class BlockFluidQuicksilver extends BlockFluidClassic
     {
         if (world.getBlock(x, y, z).getMaterial().isLiquid()) return false;
         return super.displaceIfPossible(world, x, y, z);
+    }
+
+    @Override
+    public void updateTick(World world, int x, int y, int z, Random rand)
+    {
+        byte flowDecayChangePerBlock = 7;
+        if (canDisplace(world, x, y + densityDir, z))
+        {
+            flowIntoBlock(world, x, y + densityDir, z, 1);
+        }
     }
 }
