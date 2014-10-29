@@ -48,4 +48,14 @@ public final class Names
         public static final String RESIN_CHUNK = "resinChunk";
         public static final String PLASTIC_CHUNK = "plasticChunk";
     }
+
+    /**
+     * Reference method for the String names of all the fluids in the mod.
+     */
+    public static final class Fluids
+    {
+        public static final String QUICKSILVER_FLUID = "fluidQuicksilver";
+        public static final String QUICKSILVER_STILL = "quicksilverStill";
+        public static final String QUICKSILVER_FLOWING = "quicksilverFlowing";
+    }
 }

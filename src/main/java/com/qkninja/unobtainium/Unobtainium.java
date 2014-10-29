@@ -3,6 +3,7 @@ package com.qkninja.unobtainium;
 import com.qkninja.unobtainium.client.handler.KeyInputEventHandler;
 import com.qkninja.unobtainium.handler.ConfigurationHandler;
 import com.qkninja.unobtainium.init.ModBlocks;
+import com.qkninja.unobtainium.init.ModFluidBlocks;
 import com.qkninja.unobtainium.init.ModItems;
 import com.qkninja.unobtainium.init.Recipes;
 import com.qkninja.unobtainium.proxy.IProxy;
@@ -40,6 +41,8 @@ public class Unobtainium
         ModItems.init();
 
         ModBlocks.init();
+
+        ModFluidBlocks.init();
 
         LogHelper.info("Pre Initialization Complete!");
     }
