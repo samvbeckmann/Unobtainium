@@ -4,7 +4,6 @@ package com.qkninja.unobtainium.reference;
  * Reference class for all the String names in the mod.
  * @author QKninja
  */
-
 public final class Names
 {
     /**
@@ -56,7 +55,5 @@ public final class Names
     public static final class Fluids
     {
         public static final String QUICKSILVER_FLUID = "fluidQuicksilver";
-        public static final String QUICKSILVER_STILL = "quicksilverStill";
-        public static final String QUICKSILVER_FLOWING = "quicksilverFlowing";
     }
 }

@@ -19,10 +19,10 @@ import net.minecraftforge.fluids.FluidRegistry;
  * Registers fluids and their associated blocks and buckets.
  * @author QKninja
  */
-
 public class ModFluidBlocks
 {
-    public static final Fluid quicksilver = new Fluid(Names.Fluids.QUICKSILVER_FLUID).setUnlocalizedName(Names.Fluids.QUICKSILVER_FLUID).setViscosity(500).setDensity(10000);
+    public static final Fluid quicksilver = new Fluid(Names.Fluids.QUICKSILVER_FLUID)
+            .setUnlocalizedName(Names.Fluids.QUICKSILVER_FLUID).setViscosity(500);
     public static Block blockQuicksilver;
     public static Item quicksilverBucket;
 
@@ -31,9 +31,11 @@ public class ModFluidBlocks
     public static void init()
     {
         FluidRegistry.registerFluid(quicksilver);
-        blockQuicksilver = new BlockFluidQuicksilver(quicksilver, Material.water).setBlockName(Names.Fluids.QUICKSILVER_FLUID);
+        blockQuicksilver = new BlockFluidQuicksilver(quicksilver, Material.water)
+                .setBlockName(Names.Fluids.QUICKSILVER_FLUID);
         GameRegistry.registerBlock(blockQuicksilver, Names.Fluids.QUICKSILVER_FLUID);
-        quicksilverBucket = new ItemQuicksilverBucket(blockQuicksilver).setContainerItem(Items.bucket).setUnlocalizedName(Names.Items.QUICKSILVER_BUCKET);
+        quicksilverBucket = new ItemQuicksilverBucket(blockQuicksilver)
+                .setContainerItem(Items.bucket).setUnlocalizedName(Names.Items.QUICKSILVER_BUCKET);
         GameRegistry.registerItem(quicksilverBucket, Names.Items.QUICKSILVER_BUCKET);
         FluidContainerRegistry.registerFluidContainer(quicksilver, new ItemStack(quicksilverBucket), new ItemStack(Items.bucket));
 

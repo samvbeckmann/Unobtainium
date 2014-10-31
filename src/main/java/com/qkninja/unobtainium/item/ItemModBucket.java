@@ -4,19 +4,20 @@ import com.qkninja.unobtainium.creativetab.CreativeTabUnobtainium;
 import com.qkninja.unobtainium.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 
 /**
  * @author QKninja
  */
-public class ItemUnobtainium extends Item
+public class ItemModBucket extends ItemBucket
 {
-    public ItemUnobtainium()
+    public ItemModBucket(Block fluid)
     {
-        super();
-        this.setCreativeTab(CreativeTabUnobtainium.UNOBTAINIUM_TAB);
+        super(fluid);
+        setCreativeTab(CreativeTabUnobtainium.UNOBTAINIUM_TAB);
     }
 
     @Override
@@ -42,4 +43,5 @@ public class ItemUnobtainium extends Item
     {
         return unlocalizedName.substring(unlocalizedName.indexOf(".")+1);
     }
+
 }
