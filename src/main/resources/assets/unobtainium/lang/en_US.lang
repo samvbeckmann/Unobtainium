@@ -12,6 +12,11 @@ item.unobtainium:mithrilIngot.name=Mithril Ingot
 item.unobtainium:galvornIngot.name=Galvorn Ingot
 item.unobtainium:orichalcumIngot.name=Orichalcum Ingot
 item.unobtainium:cavoriteIngot.name=Cavorite Ingot
+item.unobtainium:quicksilverBucket.name=Quicksilver Bucket
+item.unobtainium:vibraniumBucket.name=Vibranium Bucket
+item.unobtainium:resinChunk=Resin Chunk
+item.unobtainium:plasticChunk=Plastic Chunk
+item.unobtainium:adamantiumBucket.name=Adamantium Bucket
 
 # Blocks
 tile.unobtainium:mithrilOre.name=Mithril Ore
@@ -21,3 +26,10 @@ tile.unobtainium:mithril.name=Block of Mithril
 tile.unobtainium:orichalcum.name=Block of Orichalcum
 tile.unobtainium:galvorn.name=Block of Galvorn
 tile.unobtainium:cavorite.name=Block of Cavorite
+tile.unobtainium:resin.name=Resin
+tile.unobtainium:plastic.name=Block of Plastic
+
+# Fluids
+tile.unobtainium:fluidQuicksilver.name=Quicksilver
+tile.unobtainium:fluidVibranium.name=Vibranium
+tile.unobtainium:fluidAdamantium.name=Adamantium

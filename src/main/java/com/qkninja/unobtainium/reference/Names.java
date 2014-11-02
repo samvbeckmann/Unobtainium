@@ -47,6 +47,8 @@ public final class Names
         public static final String RESIN_CHUNK = "resinChunk";
         public static final String PLASTIC_CHUNK = "plasticChunk";
         public static final String QUICKSILVER_BUCKET = "quicksilverBucket";
+        public static final String VIBRANIUM_BUCKET = "vibraniumBucket";
+        public static final String ADAMANTIUM_BUCKET = "adamantiumBucket";
     }
 
     /**
@@ -55,5 +57,7 @@ public final class Names
     public static final class Fluids
     {
         public static final String QUICKSILVER_FLUID = "fluidQuicksilver";
+        public static final String VIBRANIUM_FLUID = "fluidVibranium";
+        public static final String ADAMANTIUM_FLUID = "fluidAdamantium";
     }
 }
