@@ -3,6 +3,7 @@ package com.qkninja.unobtainium.init;
 import com.qkninja.unobtainium.block.*;
 import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.reference.Reference;
+import com.qkninja.unobtainium.tileentity.TileEntityVat;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -22,6 +23,7 @@ public class ModBlocks
     public static final BlockUnobtainium cavorite = new BlockCavorite();
     public static final BlockUnobtainium oilResin = new BlockOilResin();
     public static final BlockUnobtainium plastic = new BlockPlastic();
+    public static final BlockUnobtainium fusionVat = new BlockFusionVat();
 
 
 
@@ -36,5 +38,7 @@ public class ModBlocks
         GameRegistry.registerBlock(cavorite, Names.Blocks.CAVORITE);
         GameRegistry.registerBlock(oilResin, Names.Blocks.OIL_RESIN);
         GameRegistry.registerBlock(plastic, Names.Blocks.PLASTIC);
+        GameRegistry.registerBlock(fusionVat, Names.Blocks.FUSION_VAT);
+        GameRegistry.registerTileEntity(TileEntityVat.class, "tileEntityVat");
     }
 }

@@ -32,6 +32,7 @@ public final class Names
         public static final String CAVORITE = "cavorite";
         public static final String OIL_RESIN = "oilResin";
         public static final String PLASTIC = "plastic";
+        public static final String FUSION_VAT = "fusionVat";
     }
 
     /**
