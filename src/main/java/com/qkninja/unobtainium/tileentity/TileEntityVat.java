@@ -44,9 +44,9 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         return !(slotIndex == 2);
     }
 
-    public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_)
+    public boolean canInsertItem(int slot, ItemStack itemStack, int side)
     {
-        return this.isItemValidForSlot(p_102007_1_, p_102007_2_);
+        return this.isItemValidForSlot(slot, itemStack);
     }
 
     public int[] getAccessibleSlotsFromSide(int side)
@@ -105,7 +105,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
     public boolean isUseableByPlayer(EntityPlayer entityPlayer)
     {
-        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : entityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && entityPlayer.getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D) <= 64.0D;
     }
 
     public void setInventorySlotContents(int slotIndex, ItemStack itemStack)

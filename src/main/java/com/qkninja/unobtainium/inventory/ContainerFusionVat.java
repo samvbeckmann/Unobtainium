@@ -7,6 +7,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 /**
+ * Define the inventory of the Fusion Vat.
  * @author QKninja
  */
 public class ContainerFusionVat extends ContainerUnobtainium
@@ -18,9 +19,9 @@ public class ContainerFusionVat extends ContainerUnobtainium
         this.tileEntityVat = tileEntityVat;
 
         // Add Three Vat slots to the container
-        this.addSlotToContainer(new Slot(tileEntityVat, 0, 56, 17));
-        this.addSlotToContainer(new Slot(tileEntityVat, 1, 56, 53));
-        this.addSlotToContainer(new Slot(tileEntityVat, 2, 116, 35));
+        this.addSlotToContainer(new Slot(tileEntityVat, 0, 56, 17)); // Input 1
+        this.addSlotToContainer(new Slot(tileEntityVat, 1, 56, 53)); // Input 2
+        this.addSlotToContainer(new SlotVat(tileEntityVat, 2, 116, 35)); // Output
 
         // Add player slots to container
         for (int i = 0; i < 3; ++i)
@@ -52,18 +53,23 @@ public class ContainerFusionVat extends ContainerUnobtainium
         ItemStack newItemStack = null;
         Slot slot = (Slot) inventorySlots.get(slotIndex);
 
+        // Tests if there is an itemStack in the slot. If so, places it into the newItemStack
         if (slot != null && slot.getHasStack())
         {
             ItemStack itemStack = slot.getStack();
             newItemStack = itemStack.copy();
 
+            // Merges from the tileEntity to the player inventory
             if (slotIndex < 3)
             {
-                if (!this.mergeItemStack(itemStack, 3, inventorySlots.size(), false))
+                if (!this.mergeItemStack(itemStack, inventorySlots.size()-9, inventorySlots.size(), false))
                 {
-                    return null;
+                    if (!this.mergeItemStack(itemStack, 3, inventorySlots.size()-9, false))
+                        return null;
                 }
             }
+            else if (!this.mergeItemStack(itemStack, 0, 2, false))
+                return null;
 
             if (itemStack.stackSize == 0)
             {
@@ -73,6 +79,8 @@ public class ContainerFusionVat extends ContainerUnobtainium
             {
                 slot.onSlotChanged();
             }
+
+            slot.onPickupFromSlot(entityPlayer, itemStack);
         }
 
         return newItemStack;
