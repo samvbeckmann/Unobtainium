@@ -27,14 +27,14 @@ public class ContainerFusionVat extends ContainerUnobtainium
         {
             for (int j = 0; j < 9; ++j)
             {
-                this.addSlotToContainer(new Slot(tileEntityVat, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
 
         // Add player hotbar to container
         for (int i = 0; i < 9; ++i)
         {
-            this.addSlotToContainer(new Slot(tileEntityVat, i, 8 + i * 18, 142));
+            this.addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
         }
 
     }

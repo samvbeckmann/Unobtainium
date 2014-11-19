@@ -36,11 +36,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
     public ItemStack getStackInSlot(int slotIndex)
     {
-        if (slotIndex < vatItemStacks.length)
-        {
-            return this.vatItemStacks[slotIndex];
-        } else
-            return null;
+        return this.vatItemStacks[slotIndex];
     }
 
     public boolean isItemValidForSlot(int slotIndex, ItemStack itemStack)
@@ -114,11 +110,8 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
     public void setInventorySlotContents(int slotIndex, ItemStack itemStack)
     {
-        if (slotIndex < vatItemStacks.length)
-        {
-            this.vatItemStacks[slotIndex] = itemStack;
-        } else
-            return;
+        this.vatItemStacks[slotIndex] = itemStack;
+
         if (itemStack != null && itemStack.stackSize > this.getInventoryStackLimit())
         {
             itemStack.stackSize = this.getInventoryStackLimit();
