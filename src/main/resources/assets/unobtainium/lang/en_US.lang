@@ -33,3 +33,6 @@ tile.unobtainium:plastic.name=Block of Plastic
 tile.unobtainium:fluidQuicksilver.name=Quicksilver
 tile.unobtainium:fluidVibranium.name=Vibranium
 tile.unobtainium:fluidAdamantium.name=Adamantium
+
+# GUIs
+container.unobtainium:fusionVat=Fusion Vat

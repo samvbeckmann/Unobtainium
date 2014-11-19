@@ -11,8 +11,6 @@ run
 
 ## eclipse
 eclipse
-.settings
-.metadata
 .classpath
 .project
 bin
@@ -23,4 +21,3 @@ out
 *.iml
 *.ipr
 *.iws
-atlassian-ide-plugin.xml

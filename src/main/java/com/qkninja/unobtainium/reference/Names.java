@@ -6,10 +6,6 @@ package com.qkninja.unobtainium.reference;
  */
 public final class Names
 {
-    /**
-     * Reference method for the String names of all the keys in the mod.
-     * @author QKninja
-     */
     public static final class Keys
     {
         public static final String CATEGORY = "keys.unobtainium.category";
@@ -17,10 +13,6 @@ public final class Names
         public static final String RELEASE = "keys.unobtainium.release";
     }
 
-    /**
-     * Reference method for the String names of all the blocks in the mod.
-     * @author QKninja
-     */
     public static final class Blocks
     {
         public static final String LYNGURIUM_ORE = "lynguriumOre";
@@ -35,9 +27,6 @@ public final class Names
         public static final String FUSION_VAT = "fusionVat";
     }
 
-    /**
-     * Reference method for the String names of all the items in the mod.
-     */
     public static final class Items
     {
         public static final String LYNGURIUM_GEM = "lynguriumGem";
@@ -52,13 +41,21 @@ public final class Names
         public static final String ADAMANTIUM_BUCKET = "adamantiumBucket";
     }
 
-    /**
-     * Reference method for the String names of all the fluids in the mod.
-     */
     public static final class Fluids
     {
         public static final String QUICKSILVER_FLUID = "fluidQuicksilver";
         public static final String VIBRANIUM_FLUID = "fluidVibranium";
         public static final String ADAMANTIUM_FLUID = "fluidAdamantium";
+    }
+
+    public static final class NBT
+    {
+        public static final String ITEMS = "Items";
+        public static final String CUSTOM_NAME = "CustomName";
+    }
+
+    public static final class Containers
+    {
+        public static final String VAT = "container.unobtainium:" + Blocks.FUSION_VAT;
     }
 }

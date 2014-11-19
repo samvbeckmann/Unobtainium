@@ -1,5 +1,7 @@
 package com.qkninja.unobtainium.block;
 
+import com.qkninja.unobtainium.Unobtainium;
+import com.qkninja.unobtainium.reference.GUIs;
 import com.qkninja.unobtainium.tileentity.TileEntityVat;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -25,9 +27,21 @@ public class BlockFusionVat extends BlockUnobtainium implements ITileEntityProvi
 
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7, float par8, float par9)
     {
-        TileEntityVat teVat = (TileEntityVat) world.getTileEntity(x, y, z);
-        teVat.addClick();
-        return true;
+        if (world.isRemote)
+        {
+            entityPlayer.openGui(Unobtainium.instance, GUIs.VAT.ordinal(), world, x, y, z);
+            return true;
+        }
+        else
+        {
+            TileEntityVat tileEntityVat = (TileEntityVat) world.getTileEntity(x, y, z);
+
+            if (tileEntityVat != null)
+            {
+                entityPlayer.openGui(Unobtainium.instance, GUIs.VAT.ordinal(), world, x, y, z);
+            }
+            return true;
+        }
     }
 
 }

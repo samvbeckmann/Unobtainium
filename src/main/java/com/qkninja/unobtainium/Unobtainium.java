@@ -2,6 +2,7 @@ package com.qkninja.unobtainium;
 
 import com.qkninja.unobtainium.client.handler.KeyInputEventHandler;
 import com.qkninja.unobtainium.handler.ConfigurationHandler;
+import com.qkninja.unobtainium.handler.GuiHandler;
 import com.qkninja.unobtainium.init.ModBlocks;
 import com.qkninja.unobtainium.init.ModFluidBlocks;
 import com.qkninja.unobtainium.init.ModItems;
@@ -15,6 +16,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 /**
  * @author QKninja
@@ -50,6 +52,9 @@ public class Unobtainium
     @Mod.EventHandler
     public void Init(FMLInitializationEvent event)
     {
+        // Register the Gui Handler
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+
         FMLCommonHandler.instance().bus().register(new KeyInputEventHandler());
         Recipes.init();
         LogHelper.info("Initialization Complete!");
