@@ -38,5 +38,11 @@ public class GuiFusionVat extends GuiContainer
         int xStart = (width - xSize) / 2;
         int yStart = (height - ySize) / 2;
         this.drawTexturedModalRect(xStart, yStart, 0, 0, xSize, ySize);
+
+        if (tileEntityVat.isFusing())
+        {
+            int progress = this.tileEntityVat.getFuseProgressScaled(24);
+            this.drawTexturedModalRect(xStart + 79, yStart + 34, 176, 14, progress+1, 16);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.qkninja.unobtainium.tileentity;
 
+import com.qkninja.unobtainium.item.crafting.VatRecipes;
 import com.qkninja.unobtainium.reference.Names;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -18,10 +19,46 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
     private static final int[] slotsBottom = new int[] {2, 1};
     private static final int[] slotsSides = new int[] {1};
     private ItemStack[] vatItemStacks = new ItemStack[3];
+    public int vatCookTime;
+    private static final int TOTAL_COOK_TIME = 500;
 
     public TileEntityVat()
     {
         super();
+    }
+
+    @Override
+    public void updateEntity()
+    {
+
+        boolean flag = false;
+
+        if (true) // TODO: Change to block underneath is lava or fire
+        {
+            if (!this.worldObj.isRemote)
+            {
+                if (this.canCombine())
+                {
+                    ++this.vatCookTime;
+
+                    if (this.vatCookTime == TOTAL_COOK_TIME)
+                    {
+                        this.vatCookTime = 0;
+                        this.fusion();
+                        flag = true;
+                    }
+                }
+                else
+                {
+                    this.vatCookTime = 0;
+                }
+            }
+        }
+
+        if (flag)
+        {
+            this.markDirty();
+        }
     }
 
     public int getSizeInventory()
@@ -133,6 +170,66 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
     public void openInventory() {}
 
     public void closeInventory() {}
+
+    /**
+     * Returns true if the vat can smelt the two items in the input slots.
+     */
+    private boolean canCombine()
+    {
+        if (this.vatItemStacks[0] == null || this.vatItemStacks[1] == null)
+        {
+            return false;
+        }
+        else
+        {
+            ItemStack itemStack = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
+            if (itemStack == null) return false;
+            if (this.vatItemStacks[2] == null) return true;
+            if (!this.vatItemStacks[2].isItemEqual(itemStack)) return false;
+            int result = vatItemStacks[2].stackSize + itemStack.stackSize;
+            return result <= getInventoryStackLimit() && result <= this.vatItemStacks[2].getMaxStackSize();
+        }
+    }
+
+    public void fusion()
+    {
+        if (this.canCombine())
+        {
+            ItemStack itemStack = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
+
+            if (this.vatItemStacks[2] == null)
+            {
+                this.vatItemStacks[2] = itemStack.copy();
+            }
+            else if (this.vatItemStacks[2].getItem() == itemStack.getItem())
+            {
+                this.vatItemStacks[2].stackSize += itemStack.stackSize;
+            }
+
+            --this.vatItemStacks[0].stackSize;
+            --this.vatItemStacks[1].stackSize;
+
+            if (this.vatItemStacks[0].stackSize <= 0)
+            {
+                this.vatItemStacks[0] = null;
+            }
+
+            if (this.vatItemStacks[1].stackSize <= 0)
+            {
+                this.vatItemStacks[1] = null;
+            }
+        }
+    }
+
+    public boolean isFusing()
+    {
+        return this.vatCookTime > 0;
+    }
+
+    public int getFuseProgressScaled(int pixels)
+    {
+        return this.vatCookTime * pixels / TOTAL_COOK_TIME;
+    }
 
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound)
