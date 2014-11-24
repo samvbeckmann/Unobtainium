@@ -1,6 +1,7 @@
 package com.qkninja.unobtainium.init;
 
 import com.qkninja.unobtainium.block.*;
+import com.qkninja.unobtainium.item.ItemBlockECU;
 import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.reference.Reference;
 import com.qkninja.unobtainium.tileentity.TileEntityECU;
@@ -40,7 +41,7 @@ public class ModBlocks
         GameRegistry.registerBlock(plastic, Names.Blocks.PLASTIC);
         GameRegistry.registerBlock(fusionVat, Names.Blocks.FUSION_VAT);
         GameRegistry.registerTileEntity(TileEntityVat.class, Names.TileEntities.TILE_FUSION_VAT);
-        GameRegistry.registerBlock(externalCoolingUnit, Names.Blocks.ECU);
+        GameRegistry.registerBlock(externalCoolingUnit, ItemBlockECU.class, Names.Blocks.ECU);
         GameRegistry.registerTileEntity(TileEntityECU.class, Names.TileEntities.TILE_ECU);
     }
 }
