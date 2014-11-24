@@ -3,14 +3,13 @@ package com.qkninja.unobtainium.init;
 import com.qkninja.unobtainium.block.*;
 import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.reference.Reference;
+import com.qkninja.unobtainium.tileentity.TileEntityECU;
 import com.qkninja.unobtainium.tileentity.TileEntityVat;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * Initializes the blocks in the mod.
- * @author QKninja
  */
-
 @GameRegistry.ObjectHolder(Reference.MOD_ID)
 public class ModBlocks
 {
@@ -24,6 +23,7 @@ public class ModBlocks
     public static final BlockUnobtainium oilResin = new BlockOilResin();
     public static final BlockUnobtainium plastic = new BlockPlastic();
     public static final BlockUnobtainium fusionVat = new BlockFusionVat();
+    public static final BlockUnobtainium externalCoolingUnit = new BlockECU();
 
 
 
@@ -39,6 +39,8 @@ public class ModBlocks
         GameRegistry.registerBlock(oilResin, Names.Blocks.OIL_RESIN);
         GameRegistry.registerBlock(plastic, Names.Blocks.PLASTIC);
         GameRegistry.registerBlock(fusionVat, Names.Blocks.FUSION_VAT);
-        GameRegistry.registerTileEntity(TileEntityVat.class, "tileEntityVat");
+        GameRegistry.registerTileEntity(TileEntityVat.class, Names.TileEntities.TILE_FUSION_VAT);
+        GameRegistry.registerBlock(externalCoolingUnit, Names.Blocks.ECU);
+        GameRegistry.registerTileEntity(TileEntityECU.class, Names.TileEntities.TILE_ECU);
     }
 }

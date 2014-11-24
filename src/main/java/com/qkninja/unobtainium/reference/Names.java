@@ -25,6 +25,7 @@ public final class Names
         public static final String OIL_RESIN = "oilResin";
         public static final String PLASTIC = "plastic";
         public static final String FUSION_VAT = "fusionVat";
+        public static final String ECU = "ECU";
     }
 
     public static final class Items
@@ -48,10 +49,17 @@ public final class Names
         public static final String ADAMANTIUM_FLUID = "fluidAdamantium";
     }
 
+    public static final class TileEntities
+    {
+        public static final String TILE_FUSION_VAT = "tileEntityVat";
+        public static final String TILE_ECU = "tileEntityECU";
+    }
+
     public static final class NBT
     {
         public static final String ITEMS = "Items";
         public static final String CUSTOM_NAME = "CustomName";
+//        public static final String ACTIVE_BLOCKS = "ActiveBlocks";
     }
 
     public static final class Containers

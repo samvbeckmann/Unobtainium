@@ -9,6 +9,8 @@ public class VatInputs
 {
     private ItemStack input1;
 
+    private ItemStack input2;
+
     public ItemStack getInput2()
     {
         return input2;
@@ -18,8 +20,6 @@ public class VatInputs
     {
         return input1;
     }
-
-    private ItemStack input2;
 
     public VatInputs(ItemStack in1, ItemStack in2)
     {

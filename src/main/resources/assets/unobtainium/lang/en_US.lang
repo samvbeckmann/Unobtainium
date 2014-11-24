@@ -28,6 +28,8 @@ tile.unobtainium:galvorn.name=Block of Galvorn
 tile.unobtainium:cavorite.name=Block of Cavorite
 tile.unobtainium:resin.name=Resin
 tile.unobtainium:plastic.name=Block of Plastic
+tile.unobtainium:fusionVat.name=Fusion Vat
+tile.unobtainium:ECU.name=External Cooling Unit
 
 # Fluids
 tile.unobtainium:fluidQuicksilver.name=Quicksilver

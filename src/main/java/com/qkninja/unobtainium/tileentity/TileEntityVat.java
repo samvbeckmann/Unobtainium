@@ -1,5 +1,6 @@
 package com.qkninja.unobtainium.tileentity;
 
+import com.qkninja.unobtainium.init.ModBlocks;
 import com.qkninja.unobtainium.item.crafting.VatRecipes;
 import com.qkninja.unobtainium.reference.Names;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,9 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-/**
- * @author QKninja
- */
 public class TileEntityVat extends TileEntityUnobtainium implements ISidedInventory
 {
 
@@ -20,7 +18,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
     private static final int[] slotsSides = new int[] {1};
     private ItemStack[] vatItemStacks = new ItemStack[3];
     public int vatCookTime;
-    private static final int TOTAL_COOK_TIME = 500;
+    private static final int TOTAL_COOK_TIME = 1000;
 
     public TileEntityVat()
     {
@@ -30,28 +28,26 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
     @Override
     public void updateEntity()
     {
-
         boolean flag = false;
 
-        if (true) // TODO: Change to block underneath is lava or fire
+        if (!this.worldObj.isRemote)
         {
-            if (!this.worldObj.isRemote)
+            if (this.canCombine())
             {
-                if (this.canCombine())
-                {
+                if (worldObj.getBlock(xCoord, yCoord - 1, zCoord) == ModBlocks.externalCoolingUnit)
+                    this.vatCookTime += 5;
+                else
                     ++this.vatCookTime;
 
-                    if (this.vatCookTime == TOTAL_COOK_TIME)
-                    {
-                        this.vatCookTime = 0;
-                        this.fusion();
-                        flag = true;
-                    }
-                }
-                else
+                if (this.vatCookTime >= TOTAL_COOK_TIME)
                 {
                     this.vatCookTime = 0;
+                    this.fusion();
+                    flag = true;
                 }
+            } else
+            {
+                this.vatCookTime = 0;
             }
         }
 
