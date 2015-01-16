@@ -5,9 +5,8 @@ import cpw.mods.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
 
 /**
- * @author QKninja
+ * Provides easy methods for logging events.
  */
-
 public class LogHelper {
     public static void log(Level logLevel, Object object)
     {

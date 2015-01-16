@@ -2,7 +2,6 @@ package com.qkninja.unobtainium.reference;
 
 /**
  * Reference class for all the String names in the mod.
- * @author QKninja
  */
 public final class Names
 {

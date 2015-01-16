@@ -8,9 +8,8 @@ import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 
 /**
- * @author QKninja
+ * Used to create the interface for changing config values via gui.
  */
-
 public class ModGuiConfig extends GuiConfig
 {
     public ModGuiConfig(GuiScreen guiScreen)

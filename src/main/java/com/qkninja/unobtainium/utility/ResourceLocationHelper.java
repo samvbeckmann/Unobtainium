@@ -4,7 +4,7 @@ import com.qkninja.unobtainium.reference.Reference;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * @author QKninja
+ * Various methods for getting a resources location from file name.
  */
 public class ResourceLocationHelper
 {

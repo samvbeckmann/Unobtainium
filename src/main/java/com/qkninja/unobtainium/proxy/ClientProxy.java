@@ -5,7 +5,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import net.minecraft.client.settings.KeyBinding;
 
 /**
- * @author QKninja
+ * Contains methods for client-side proxy operations.
  */
 public class ClientProxy extends CommonProxy
 {

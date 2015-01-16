@@ -1,4 +1,4 @@
-package com.qkninja.unobtainium.client.handler;
+package com.qkninja.unobtainium.handler;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -13,9 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author QKninja
+ * Handles what to do when a custom liquid is right clicked with a bucket.
  */
-
 public class BucketHandler
 {
     public static BucketHandler INSTANCE = new BucketHandler();

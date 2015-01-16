@@ -5,7 +5,7 @@ import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 
 /**
- * Created by Sam on 2014-10-20.
+ * Sets default keybindings when the game is started for the first time.
  */
 public class Keybindings
 {

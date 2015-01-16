@@ -1,7 +1,7 @@
 package com.qkninja.unobtainium.reference;
 
 /**
- * @author QKninja
+ * Contains basic information constants about the mod.
  */
 public class Reference
 {

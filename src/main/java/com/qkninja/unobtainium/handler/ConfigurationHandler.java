@@ -7,7 +7,9 @@ import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 
 /**
- * @author QKninja
+ * Sets up the configuration file.
+ * <br>
+ *     Currently unused in gameplay.
  */
 public class ConfigurationHandler
 {

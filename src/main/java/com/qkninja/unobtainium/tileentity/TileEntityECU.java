@@ -7,6 +7,9 @@ import net.minecraft.init.Blocks;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ECU speeds up various processes and can rapidly cool down materials.
+ */
 public class TileEntityECU extends TileEntityUnobtainium
 {
     private List<BlockPosition> activeBlocks = new ArrayList<BlockPosition>();

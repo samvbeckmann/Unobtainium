@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiScreen;
 import java.util.Set;
 
 /**
- * @author Qkninja
+ * Implements bspkrs config gui, allows config values to be changed via gui.
  */
 public class GuiFactory implements IModGuiFactory
 {

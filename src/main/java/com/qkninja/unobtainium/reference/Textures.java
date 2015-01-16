@@ -4,7 +4,7 @@ import com.qkninja.unobtainium.utility.ResourceLocationHelper;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * @author QKninja
+ * Contains asset locations for various textures.
  */
 public class Textures
 {

@@ -6,9 +6,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 /**
- * @author QKninja
+ * Defines a new tab in the creative menu
  */
-
 public class CreativeTabUnobtainium
 {
     public static final CreativeTabs UNOBTAINIUM_TAB = new CreativeTabs(Reference.MOD_ID.toLowerCase())

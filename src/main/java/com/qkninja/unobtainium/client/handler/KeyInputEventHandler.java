@@ -7,11 +7,14 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 
 /**
- * Created by Sam on 2014-10-20.
+ * Handles key presses, allowing easy access when a set keybinding is pressed.
  */
-
 public class KeyInputEventHandler
 {
+    /**
+     * When sent a key input event, returns the key that is pressed.
+     * @return The Key pressed by the user.
+     */
     private static Key getPressedKeybinding()
     {
         if (Keybindings.charge.isPressed())
@@ -25,7 +28,9 @@ public class KeyInputEventHandler
 
         return Key.UNKNOWN;
     }
-
+/*
+    Below code would print each keypress to the log.
+ */
 //    @SubscribeEvent
 //    public void handleKeyInputEvent(InputEvent.KeyInputEvent event)
 //    {

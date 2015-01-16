@@ -1,9 +1,12 @@
 package com.qkninja.unobtainium.proxy;
 
 /**
- * @author QKninja
+ * Interface for roxy classes.
  */
 public interface IProxy
 {
+    /**
+     * Runs on initialization (client), registers keys, assigns defaults if unassigned.
+     */
     public abstract void registerKeyBindings();
 }

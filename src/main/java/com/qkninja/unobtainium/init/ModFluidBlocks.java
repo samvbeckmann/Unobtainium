@@ -3,7 +3,7 @@ package com.qkninja.unobtainium.init;
 import com.qkninja.unobtainium.block.BlockFluidAdamantium;
 import com.qkninja.unobtainium.block.BlockFluidQuicksilver;
 import com.qkninja.unobtainium.block.BlockFluidVibranium;
-import com.qkninja.unobtainium.client.handler.BucketHandler;
+import com.qkninja.unobtainium.handler.BucketHandler;
 import com.qkninja.unobtainium.item.ItemAdamantiumBucket;
 import com.qkninja.unobtainium.item.ItemQuicksilverBucket;
 import com.qkninja.unobtainium.item.ItemVibraniumBucket;
@@ -21,7 +21,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 /**
  * Registers fluids and their associated blocks and buckets.
- * @author QKninja
  */
 public class ModFluidBlocks
 {
@@ -39,7 +38,6 @@ public class ModFluidBlocks
             .setUnlocalizedName(Names.Fluids.ADAMANTIUM_FLUID).setViscosity(10000);
     public static Block blockAdamantium;
     public static Item adamantiumBucket;
-
 
 
     public static void init()

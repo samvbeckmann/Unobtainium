@@ -9,7 +9,7 @@ import com.qkninja.unobtainium.tileentity.TileEntityVat;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
- * Initializes the blocks in the mod.
+ * Initializes the blocks and tile entities in the mod.
  */
 @GameRegistry.ObjectHolder(Reference.MOD_ID)
 public class ModBlocks

@@ -6,8 +6,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Not Currently in Use.
- * @author QK ninja
+ * Generic Gui class for Unobtainium.
+ * @deprecated Not currently in use.
  */
 public class GuiUnobtainium extends GuiContainer
 {

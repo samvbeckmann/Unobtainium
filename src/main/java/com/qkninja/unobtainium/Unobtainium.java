@@ -19,9 +19,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 /**
+ * <h1>Unobtainium</h1>
+ * <br>Unobtainium is a mod about impossible materials.
  * @author QKninja
+ * @version 1.7.10-1.0
  */
-
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, guiFactory = Reference.GUI_FACTORY_CLASS)
 public class Unobtainium
 {

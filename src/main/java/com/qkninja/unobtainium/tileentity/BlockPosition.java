@@ -1,8 +1,7 @@
 package com.qkninja.unobtainium.tileentity;
 
 /**
- * BlockPosition contains three coordinates.
- * Used for the ECU's solidifying lava.
+ * Data type that contains x, y, and z coordinates.
  */
 public class BlockPosition
 {

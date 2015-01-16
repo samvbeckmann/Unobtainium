@@ -10,7 +10,7 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 /**
- * @author QKninja
+ * Creates the Gui for the Fusion Vat.
  */
 public class GuiFusionVat extends GuiContainer
 {

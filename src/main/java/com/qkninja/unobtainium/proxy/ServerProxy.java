@@ -1,7 +1,7 @@
 package com.qkninja.unobtainium.proxy;
 
 /**
- * @author QKninja
+ * Contains methods for server-side proxy operations.
  */
 public class ServerProxy extends CommonProxy
 {
