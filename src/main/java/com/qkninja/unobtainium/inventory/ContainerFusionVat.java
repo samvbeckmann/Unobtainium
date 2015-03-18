@@ -17,8 +17,8 @@ import net.minecraft.item.ItemStack;
 public class ContainerFusionVat extends ContainerUnobtainium
 {
     private final TileEntityVat tileEntityVat;
-    private int lastCookTime;
-    private int lastWasteAmount;
+    private int lastCookTime = -1;
+    private int lastWasteAmount = -1;
 
     public ContainerFusionVat(InventoryPlayer inventoryPlayer, TileEntityVat tileEntityVat)
     {
@@ -42,6 +42,7 @@ public class ContainerFusionVat extends ContainerUnobtainium
 
     /**
      * Looks for changes made in the container, sends them to every listener.
+     * (Called by server to update clients)
      */
     @Override
     public void detectAndSendChanges()
@@ -59,7 +60,7 @@ public class ContainerFusionVat extends ContainerUnobtainium
 
             if(this.lastWasteAmount != this.tileEntityVat.getWasteAmount())
             {
-                iCrafting.sendProgressBarUpdate(this, 0, this.tileEntityVat.getWasteAmount());
+                iCrafting.sendProgressBarUpdate(this, 1, this.tileEntityVat.getWasteAmount());
             }
         }
 
@@ -67,14 +68,20 @@ public class ContainerFusionVat extends ContainerUnobtainium
         this.lastWasteAmount = this.tileEntityVat.getWasteAmount();
     }
 
+    /**
+     * Updates data on the client side.
+     *
+     * @param id What piece of data is being received
+     * @param value Value of the piece of data being received
+     */
     @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int barIndex, int value)
+    public void updateProgressBar(int id, int value)
     {
-        if (barIndex == 0)
+        if (id == 0)
         {
             this.tileEntityVat.vatCookTime = value;
         }
-        if (barIndex == 1)
+        if (id == 1)
         {
             this.tileEntityVat.setWasteAmount(value);
         }

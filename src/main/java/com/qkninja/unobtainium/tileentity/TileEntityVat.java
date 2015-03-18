@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidTank;
 
@@ -36,7 +37,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
      */
     private static final int[] slotsSides = new int[]{0, 1};
 
-    private FluidStack currentWaste;
+    private FluidTank currentWaste;
 
     public boolean isWasteEmpty;
 
@@ -49,7 +50,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
     {
         super();
         isWasteEmpty = true;
-        currentWaste = new FluidStack(ModFluidBlocks.quicksilver, 0);
+        currentWaste = new FluidTank(new FluidStack(ModFluidBlocks.quicksilver, 0), TOTAL_WASTE_SPACE);
     }
 
     @Override
@@ -207,10 +208,10 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         {
             VatOutputs outputs = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
             if (outputs == null) return false;
+            if (!outputs.getWaste().isFluidEqual(currentWaste.getFluid())) return false;
+            if (outputs.getWaste().amount + currentWaste.getFluidAmount() > TOTAL_WASTE_SPACE) return false;
             if (this.vatItemStacks[2] == null) return true;
             if (!this.vatItemStacks[2].isItemEqual(outputs.getOutput())) return false;
-            if (!outputs.getWaste().isFluidEqual(currentWaste)) return false;
-            if (outputs.getWaste().amount + currentWaste.amount > TOTAL_WASTE_SPACE) return false;
             int result = vatItemStacks[2].stackSize + outputs.getOutput().stackSize;
             return result <= getInventoryStackLimit() && result <= this.vatItemStacks[2].getMaxStackSize();
         }
@@ -259,7 +260,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
     public boolean hasWaste()
     {
-        return !isWasteEmpty;
+        return currentWaste.getFluidAmount() != 0;
     }
 
 
@@ -280,6 +281,8 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
                 vatItemStacks[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
             }
         }
+
+        currentWaste.readFromNBT(nbtTagCompound);
     }
 
     public boolean hasECU()
@@ -305,16 +308,18 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
             }
         }
         nbtTagCompound.setTag(Names.NBT.ITEMS, tagList);
+
+        currentWaste.writeToNBT(nbtTagCompound);
     }
 
     public FluidStack getFluid()
     {
-        return currentWaste;
+        return currentWaste.getFluid();
     }
 
     public int getFluidAmount()
     {
-        return currentWaste.amount;
+        return currentWaste.getFluidAmount();
     }
 
     public int getCapacity()
@@ -324,71 +329,34 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
     public FluidTankInfo getInfo()
     {
-        return new FluidTankInfo(currentWaste, TOTAL_WASTE_SPACE);
+        return new FluidTankInfo(currentWaste);
     }
 
     public int fill(FluidStack resource, boolean doFill)
     {
-        if (isWasteEmpty)
-        {
-            if (resource.amount <= TOTAL_WASTE_SPACE)
-            {
-                if (doFill)
-                {
-                    currentWaste = new FluidStack(resource.getFluid(), resource.amount);
-                    isWasteEmpty = false;
-                }
-                return resource.amount;
-            } else
-            {
-                if (doFill)
-                {
-                    currentWaste = new FluidStack(resource.getFluid(), TOTAL_WASTE_SPACE);
-                    isWasteEmpty = false;
-                }
-                return TOTAL_WASTE_SPACE;
-            }
-        } else if (resource.isFluidEqual(currentWaste))
-        {
-            if (resource.amount <= getRemainingTankCapacity())
-            {
-                if (doFill)
-                    currentWaste.amount += resource.amount;
-                return resource.amount;
-            } else
-            {
-                int amountFilled = getRemainingTankCapacity();
-                if (doFill)
-                    currentWaste.amount = TOTAL_WASTE_SPACE;
-                return amountFilled;
-            }
-        } else return 0;
+       return currentWaste.fill(resource, doFill);
     }
 
     public FluidStack drain(int maxDrain, boolean doDrain)
     {
-        if (maxDrain < currentWaste.amount) // can drain everything
-        {
-            if (doDrain)
-            {
-                currentWaste.amount -= maxDrain;
-            }
-            return new FluidStack(currentWaste.getFluid(), maxDrain);
-        } else
-        {
-            int amountDrained = currentWaste.amount;
-            if (doDrain)
-            {
-                currentWaste.amount = 0;
-                isWasteEmpty = true;
-            }
-            return new FluidStack(currentWaste.getFluid(), amountDrained);
-        }
-    }
-
-    private int getRemainingTankCapacity()
-    {
-        return TOTAL_WASTE_SPACE - currentWaste.amount;
+        return currentWaste.drain(maxDrain, doDrain);
+//        if (maxDrain < currentWaste.amount) // can drain everything
+//        {
+//            if (doDrain)
+//            {
+//                currentWaste.amount -= maxDrain;
+//            }
+//            return new FluidStack(currentWaste.getFluid(), maxDrain);
+//        } else
+//        {
+//            int amountDrained = currentWaste.amount;
+//            if (doDrain)
+//            {
+//                currentWaste.amount = 0;
+//                isWasteEmpty = true;
+//            }
+//            return new FluidStack(currentWaste.getFluid(), amountDrained);
+//        }
     }
 
     public int getFuseProgressScaled(int pixels)
@@ -398,16 +366,16 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
     public int getWasteScaled(int pixels)
     {
-        return currentWaste.amount * pixels / TOTAL_WASTE_SPACE;
+        return currentWaste.getFluidAmount() * pixels / TOTAL_WASTE_SPACE;
     }
 
     public int getWasteAmount()
     {
-        return currentWaste.amount;
+        return currentWaste.getFluidAmount();
     }
 
     public void setWasteAmount(int amount)
     {
-        currentWaste.amount = amount;
+        currentWaste.getFluid().amount = amount;
     }
 }
