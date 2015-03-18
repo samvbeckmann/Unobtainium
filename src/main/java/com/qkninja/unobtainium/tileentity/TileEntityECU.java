@@ -6,13 +6,14 @@ import net.minecraft.init.Blocks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * ECU speeds up various processes and can rapidly cool down materials.
  */
 public class TileEntityECU extends TileEntityUnobtainium
 {
-    private List<BlockPosition> activeBlocks = new ArrayList<BlockPosition>();
+//    private List<BlockPosition> activeBlocks = new ArrayList<BlockPosition>();
 
     public TileEntityECU()
     {
@@ -22,6 +23,23 @@ public class TileEntityECU extends TileEntityUnobtainium
     @Override
     public void updateEntity()
     {
+        // 450 blocks to be checked.
+        Random rnd = new Random();
+        int yOffset = rnd.nextInt(5);
+        int xOffset = 0;
+        if (yOffset != 0)
+            xOffset = rnd.nextInt(yOffset*2) - yOffset;
+        int zOffset = 0;
+        if (yOffset != 0)
+            zOffset = rnd.nextInt(yOffset*2) - yOffset;
+
+        if (xOffset != 0 || yOffset != 0 || zOffset != 0)
+            checkBlockForLava(xCoord + xOffset, yCoord + 5 - yOffset, zCoord + zOffset);
+
+
+
+
+        /*
         List<BlockPosition> newActiveBlocks = new ArrayList<BlockPosition>();
 
         // Checks all the blocks around the initial tileEntity
@@ -60,10 +78,16 @@ public class TileEntityECU extends TileEntityUnobtainium
         }
 
         activeBlocks = newActiveBlocks;
+        */
     }
+
 
     private boolean checkBlockForLava(int x, int y, int z)
     {
+
+//        worldObj.setBlock(x, y, z, Blocks.gold_block);
+        return true;
+        /*
         Block locBlock = worldObj.getBlock(x, y, z);
         Material block = locBlock.getMaterial();
 
@@ -72,6 +96,7 @@ public class TileEntityECU extends TileEntityUnobtainium
             worldObj.setBlock(x, y, z, Blocks.obsidian);
             return true;
         } else return false;
+        */
     }
 
 //    @Override

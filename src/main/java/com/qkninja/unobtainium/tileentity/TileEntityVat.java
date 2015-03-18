@@ -1,6 +1,8 @@
 package com.qkninja.unobtainium.tileentity;
 
 import com.qkninja.unobtainium.init.ModBlocks;
+import com.qkninja.unobtainium.init.ModFluidBlocks;
+import com.qkninja.unobtainium.item.crafting.VatOutputs;
 import com.qkninja.unobtainium.item.crafting.VatRecipes;
 import com.qkninja.unobtainium.reference.Names;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,21 +10,46 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidTank;
 
-public class TileEntityVat extends TileEntityUnobtainium implements ISidedInventory
+/**
+ * Defines the processes associated with a fusion vat.
+ *
+ * @author QK ninja
+ */
+public class TileEntityVat extends TileEntityUnobtainium implements ISidedInventory, IFluidTank
 {
+    /**
+     * Slots that can be accessed from the top of the vat.
+     */
+    private static final int[] slotsTop = new int[]{0, 1};
 
+    /**
+     * Solts that can be accessed from the bottom of the vat.
+     */
+    private static final int[] slotsBottom = new int[]{2};
 
-    private static final int[] slotsTop = new int[] {0};
-    private static final int[] slotsBottom = new int[] {2, 1};
-    private static final int[] slotsSides = new int[] {1};
+    /**
+     * Slots that can be accessed from the sides of the vat.
+     */
+    private static final int[] slotsSides = new int[]{0, 1};
+
+    private FluidStack currentWaste;
+
+    public boolean isWasteEmpty;
+
     private ItemStack[] vatItemStacks = new ItemStack[3];
     public int vatCookTime;
     private static final int TOTAL_COOK_TIME = 1000;
+    private static final int TOTAL_WASTE_SPACE = 1000;
 
     public TileEntityVat()
     {
         super();
+        isWasteEmpty = true;
+        currentWaste = new FluidStack(ModFluidBlocks.quicksilver, 0);
     }
 
     @Override
@@ -34,7 +61,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         {
             if (this.canCombine())
             {
-                if (worldObj.getBlock(xCoord, yCoord - 1, zCoord) == ModBlocks.externalCoolingUnit)
+                if (hasECU())
                     this.vatCookTime += 5;
                 else
                     ++this.vatCookTime;
@@ -94,8 +121,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
             ItemStack itemstack = this.vatItemStacks[slotIndex];
             this.vatItemStacks[slotIndex] = null;
             return itemstack;
-        }
-        else
+        } else
         {
             return null;
         }
@@ -112,8 +138,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
                 itemstack = this.vatItemStacks[slotIndex];
                 this.vatItemStacks[slotIndex] = null;
                 return itemstack;
-            }
-            else
+            } else
             {
                 itemstack = this.vatItemStacks[slotIndex].splitStack(numRemove);
 
@@ -124,8 +149,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
                 return itemstack;
             }
-        }
-        else
+        } else
         {
             return null;
         }
@@ -151,21 +175,25 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         }
     }
 
-    @Override
     public String getInventoryName()
     {
         return this.hasCustomName() ? this.getCustomName() : Names.Containers.VAT;
     }
 
-    @Override
     public boolean hasCustomInventoryName()
     {
         return this.hasCustomName();
     }
 
-    public void openInventory() {}
+    public void openInventory()
+    {
+        // NOOP
+    }
 
-    public void closeInventory() {}
+    public void closeInventory()
+    {
+        // NOOP
+    }
 
     /**
      * Returns true if the vat can smelt the two items in the input slots.
@@ -175,31 +203,36 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         if (this.vatItemStacks[0] == null || this.vatItemStacks[1] == null)
         {
             return false;
-        }
-        else
+        } else
         {
-            ItemStack itemStack = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
-            if (itemStack == null) return false;
+            VatOutputs outputs = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
+            if (outputs == null) return false;
             if (this.vatItemStacks[2] == null) return true;
-            if (!this.vatItemStacks[2].isItemEqual(itemStack)) return false;
-            int result = vatItemStacks[2].stackSize + itemStack.stackSize;
+            if (!this.vatItemStacks[2].isItemEqual(outputs.getOutput())) return false;
+            if (!outputs.getWaste().isFluidEqual(currentWaste)) return false;
+            if (outputs.getWaste().amount + currentWaste.amount > TOTAL_WASTE_SPACE) return false;
+            int result = vatItemStacks[2].stackSize + outputs.getOutput().stackSize;
             return result <= getInventoryStackLimit() && result <= this.vatItemStacks[2].getMaxStackSize();
         }
     }
 
+    /**
+     * Fuses the two inputs, and produces outputs from recipe.
+     */
     public void fusion()
     {
         if (this.canCombine())
         {
-            ItemStack itemStack = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
+            VatOutputs result = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
+            ItemStack output = result.getOutput();
+            FluidStack waste = result.getWaste();
 
             if (this.vatItemStacks[2] == null)
             {
-                this.vatItemStacks[2] = itemStack.copy();
-            }
-            else if (this.vatItemStacks[2].getItem() == itemStack.getItem())
+                this.vatItemStacks[2] = output.copy();
+            } else if (this.vatItemStacks[2].getItem() == output.getItem())
             {
-                this.vatItemStacks[2].stackSize += itemStack.stackSize;
+                this.vatItemStacks[2].stackSize += output.stackSize;
             }
 
             --this.vatItemStacks[0].stackSize;
@@ -214,6 +247,8 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
             {
                 this.vatItemStacks[1] = null;
             }
+
+            fill(waste, true);
         }
     }
 
@@ -222,10 +257,11 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         return this.vatCookTime > 0;
     }
 
-    public int getFuseProgressScaled(int pixels)
+    public boolean hasWaste()
     {
-        return this.vatCookTime * pixels / TOTAL_COOK_TIME;
+        return !isWasteEmpty;
     }
+
 
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound)
@@ -246,6 +282,11 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         }
     }
 
+    public boolean hasECU()
+    {
+        return worldObj.getBlock(xCoord, yCoord - 1, zCoord) == ModBlocks.externalCoolingUnit;
+    }
+
     @Override
     public void writeToNBT(NBTTagCompound nbtTagCompound)
     {
@@ -264,5 +305,109 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
             }
         }
         nbtTagCompound.setTag(Names.NBT.ITEMS, tagList);
+    }
+
+    public FluidStack getFluid()
+    {
+        return currentWaste;
+    }
+
+    public int getFluidAmount()
+    {
+        return currentWaste.amount;
+    }
+
+    public int getCapacity()
+    {
+        return TOTAL_WASTE_SPACE;
+    }
+
+    public FluidTankInfo getInfo()
+    {
+        return new FluidTankInfo(currentWaste, TOTAL_WASTE_SPACE);
+    }
+
+    public int fill(FluidStack resource, boolean doFill)
+    {
+        if (isWasteEmpty)
+        {
+            if (resource.amount <= TOTAL_WASTE_SPACE)
+            {
+                if (doFill)
+                {
+                    currentWaste = new FluidStack(resource.getFluid(), resource.amount);
+                    isWasteEmpty = false;
+                }
+                return resource.amount;
+            } else
+            {
+                if (doFill)
+                {
+                    currentWaste = new FluidStack(resource.getFluid(), TOTAL_WASTE_SPACE);
+                    isWasteEmpty = false;
+                }
+                return TOTAL_WASTE_SPACE;
+            }
+        } else if (resource.isFluidEqual(currentWaste))
+        {
+            if (resource.amount <= getRemainingTankCapacity())
+            {
+                if (doFill)
+                    currentWaste.amount += resource.amount;
+                return resource.amount;
+            } else
+            {
+                int amountFilled = getRemainingTankCapacity();
+                if (doFill)
+                    currentWaste.amount = TOTAL_WASTE_SPACE;
+                return amountFilled;
+            }
+        } else return 0;
+    }
+
+    public FluidStack drain(int maxDrain, boolean doDrain)
+    {
+        if (maxDrain < currentWaste.amount) // can drain everything
+        {
+            if (doDrain)
+            {
+                currentWaste.amount -= maxDrain;
+            }
+            return new FluidStack(currentWaste.getFluid(), maxDrain);
+        } else
+        {
+            int amountDrained = currentWaste.amount;
+            if (doDrain)
+            {
+                currentWaste.amount = 0;
+                isWasteEmpty = true;
+            }
+            return new FluidStack(currentWaste.getFluid(), amountDrained);
+        }
+    }
+
+    private int getRemainingTankCapacity()
+    {
+        return TOTAL_WASTE_SPACE - currentWaste.amount;
+    }
+
+    public int getFuseProgressScaled(int pixels)
+    {
+        return this.vatCookTime * pixels / TOTAL_COOK_TIME;
+    }
+
+    public int getWasteScaled(int pixels)
+    {
+        return currentWaste.amount * pixels / TOTAL_WASTE_SPACE;
+    }
+
+    public int getWasteAmount()
+    {
+        return currentWaste.amount;
+    }
+
+    public void setWasteAmount(int amount)
+    {
+        currentWaste.amount = amount;
     }
 }

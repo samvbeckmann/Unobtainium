@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by Sam on 2014-11-19.
  */
-public class SlotVat extends Slot
+public class SlotOutput extends Slot
 {
-    public SlotVat(IInventory inventory, int slotNum, int x, int y)
+    public SlotOutput(IInventory inventory, int slotNum, int x, int y)
     {
         super(inventory, slotNum, x, y);
     }

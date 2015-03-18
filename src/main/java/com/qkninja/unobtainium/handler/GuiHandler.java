@@ -16,24 +16,25 @@ public class GuiHandler implements IGuiHandler
     /**
      * Returns a Server side Container to be displayed to the user.
      *
-     * @param ID The Gui ID Number
+     * @param ID     The Gui ID Number
      * @param player The player viewing the Gui
-     * @param world The current world
-     * @param x X Position
-     * @param y Y Position
-     * @param z Z Position
+     * @param world  The current world
+     * @param x      X Position
+     * @param y      Y Position
+     * @param z      Z Position
      * @return A GuiScreen/Container to be displayed to the user, null if none.
      */
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        if (ID == GUIs.VAT.ordinal())
+        switch (GUIs.values()[ID])
         {
-            TileEntityVat tileEntityVat = (TileEntityVat) world.getTileEntity(x, y, z);
-            return new ContainerFusionVat(player.inventory, tileEntityVat);
+            case VAT:
+                TileEntityVat tileEntityVat = (TileEntityVat) world.getTileEntity(x, y, z);
+                return new ContainerFusionVat(player.inventory, tileEntityVat);
+            default:
+                throw new IllegalArgumentException("No GUI with ID " + ID);
         }
-
-        return null;
     }
 
     /**
@@ -41,23 +42,24 @@ public class GuiHandler implements IGuiHandler
      * needs to return a instance of GuiScreen On the server side, this needs to
      * return a instance of Container
      *
-     * @param ID The Gui ID Number
+     * @param ID     The Gui ID Number
      * @param player The player viewing the Gui
-     * @param world The current world
-     * @param x X Position
-     * @param y Y Position
-     * @param z Z Position
+     * @param world  The current world
+     * @param x      X Position
+     * @param y      Y Position
+     * @param z      Z Position
      * @return A GuiScreen/Container to be displayed to the user, null if none.
      */
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        if (ID == GUIs.VAT.ordinal())
+        switch (GUIs.values()[ID])
         {
-            TileEntityVat tileEntityVat = (TileEntityVat) world.getTileEntity(x, y, z);
-            return new GuiFusionVat(player.inventory, tileEntityVat);
+            case VAT:
+                TileEntityVat tileEntityVat = (TileEntityVat) world.getTileEntity(x, y, z);
+                return new GuiFusionVat(player.inventory, tileEntityVat);
+            default:
+                throw new IllegalArgumentException("No GUI with ID " + ID);
         }
-
-        return null;
     }
 }

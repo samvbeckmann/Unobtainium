@@ -11,37 +11,25 @@ import net.minecraft.item.ItemStack;
 
 /**
  * Define the inventory of the Fusion Vat.
+ *
  * @author QKninja
  */
 public class ContainerFusionVat extends ContainerUnobtainium
 {
-    private TileEntityVat tileEntityVat;
+    private final TileEntityVat tileEntityVat;
     private int lastCookTime;
+    private int lastWasteAmount;
 
     public ContainerFusionVat(InventoryPlayer inventoryPlayer, TileEntityVat tileEntityVat)
     {
         this.tileEntityVat = tileEntityVat;
 
         // Add Three Vat slots to the container
-        this.addSlotToContainer(new Slot(tileEntityVat, 0, 56, 17)); // Input 1
-        this.addSlotToContainer(new Slot(tileEntityVat, 1, 56, 53)); // Input 2
-        this.addSlotToContainer(new SlotVat(tileEntityVat, 2, 116, 35)); // Output
+        this.addSlotToContainer(new Slot(tileEntityVat, 0, 60, 16)); // Input 1
+        this.addSlotToContainer(new Slot(tileEntityVat, 1, 100, 16)); // Input 2
+        this.addSlotToContainer(new SlotOutput(tileEntityVat, 2, 80, 55)); // Output
 
-        // Add player slots to container
-        for (int i = 0; i < PLAYER_INVENTORY_ROWS; ++i)
-        {
-            for (int j = 0; j < PLAYER_INVENTORY_COLUMNS; ++j)
-            {
-                this.addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-            }
-        }
-
-        // Add player hotbar to container
-        for (int i = 0; i < PLAYER_INVENTORY_COLUMNS; ++i)
-        {
-            this.addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
-        }
-
+        addPlayerSlots(inventoryPlayer, 8, 84);
     }
 
     @Override
@@ -49,6 +37,7 @@ public class ContainerFusionVat extends ContainerUnobtainium
     {
         super.addCraftingToCrafters(crafting);
         crafting.sendProgressBarUpdate(this, 0, this.tileEntityVat.vatCookTime);
+        crafting.sendProgressBarUpdate(this, 1, this.tileEntityVat.getWasteAmount());
     }
 
     /**
@@ -67,17 +56,27 @@ public class ContainerFusionVat extends ContainerUnobtainium
             {
                 iCrafting.sendProgressBarUpdate(this, 0, this.tileEntityVat.vatCookTime);
             }
+
+            if(this.lastWasteAmount != this.tileEntityVat.getWasteAmount())
+            {
+                iCrafting.sendProgressBarUpdate(this, 0, this.tileEntityVat.getWasteAmount());
+            }
         }
 
         this.lastCookTime = this.tileEntityVat.vatCookTime;
+        this.lastWasteAmount = this.tileEntityVat.getWasteAmount();
     }
 
     @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int  barIndex, int value)
+    public void updateProgressBar(int barIndex, int value)
     {
         if (barIndex == 0)
         {
             this.tileEntityVat.vatCookTime = value;
+        }
+        if (barIndex == 1)
+        {
+            this.tileEntityVat.setWasteAmount(value);
         }
     }
 
@@ -104,20 +103,18 @@ public class ContainerFusionVat extends ContainerUnobtainium
             // Merges from the tileEntity to the player inventory
             if (slotIndex < 3)
             {
-                if (!this.mergeItemStack(itemStack, inventorySlots.size()-9, inventorySlots.size(), false))
+                if (!this.mergeItemStack(itemStack, inventorySlots.size() - 9, inventorySlots.size(), false))
                 {
-                    if (!this.mergeItemStack(itemStack, 3, inventorySlots.size()-9, false))
+                    if (!this.mergeItemStack(itemStack, 3, inventorySlots.size() - 9, false))
                         return null;
                 }
-            }
-            else if (!this.mergeItemStack(itemStack, 0, 2, false))
+            } else if (!this.mergeItemStack(itemStack, 0, 2, false))
                 return null;
 
             if (itemStack.stackSize == 0)
             {
                 slot.putStack(null);
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }
@@ -126,5 +123,10 @@ public class ContainerFusionVat extends ContainerUnobtainium
         }
 
         return newItemStack;
+    }
+
+    public boolean canInteractWith(EntityPlayer entityPlayer)
+    {
+        return tileEntityVat.isUseableByPlayer(entityPlayer);
     }
 }

@@ -12,13 +12,13 @@ import org.lwjgl.opengl.GL11;
 /**
  * Creates the Gui for the Fusion Vat.
  */
-public class GuiFusionVat extends GuiContainer
+public class GuiFusionVat extends GuiUnobtainium
 {
     private TileEntityVat tileEntityVat;
 
     public GuiFusionVat(InventoryPlayer inventoryPlayer, TileEntityVat vat)
     {
-        super(new ContainerFusionVat(inventoryPlayer, vat));
+        super(new ContainerFusionVat(inventoryPlayer, vat), Textures.Gui.VAT);
         tileEntityVat = vat;
     }
 
@@ -27,22 +27,24 @@ public class GuiFusionVat extends GuiContainer
     protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_)
     {
         String s = StatCollector.translateToLocal(tileEntityVat.getInventoryName());
-        this.fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 6, Colors.VERY_DARK_GREY);
+        this.fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 3, Colors.LIGHT_GREY);
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float opacity, int x, int y)
     {
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(Textures.Gui.VAT);
-        int xStart = (width - xSize) / 2;
-        int yStart = (height - ySize) / 2;
-        this.drawTexturedModalRect(xStart, yStart, 0, 0, xSize, ySize);
+        super.drawGuiContainerBackgroundLayer(opacity, x, y);
 
         if (tileEntityVat.isFusing())
         {
-            int progress = this.tileEntityVat.getFuseProgressScaled(24);
-            this.drawTexturedModalRect(xStart + 79, yStart + 34, 176, 14, progress+1, 16);
+            int fuseProgress = this.tileEntityVat.getFuseProgressScaled(31);
+            this.drawTexturedModalRect(guiLeft + 78, guiTop + 22, 176, 55, 19, fuseProgress + 1);
+        }
+
+        if (tileEntityVat.hasWaste())
+        {
+            int waste = tileEntityVat.getWasteScaled(30);
+            this.drawTexturedModalRect(guiLeft + 100, guiTop + 20 + 30 - waste, 176, 80, 30, waste);
         }
     }
 }
