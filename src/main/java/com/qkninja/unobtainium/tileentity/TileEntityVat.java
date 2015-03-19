@@ -1,7 +1,6 @@
 package com.qkninja.unobtainium.tileentity;
 
 import com.qkninja.unobtainium.init.ModBlocks;
-import com.qkninja.unobtainium.init.ModFluidBlocks;
 import com.qkninja.unobtainium.item.crafting.VatOutputs;
 import com.qkninja.unobtainium.item.crafting.VatRecipes;
 import com.qkninja.unobtainium.reference.Names;
@@ -50,7 +49,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
     {
         super();
         isWasteEmpty = true;
-        currentWaste = new FluidTank(new FluidStack(ModFluidBlocks.quicksilver, 0), TOTAL_WASTE_SPACE);
+        currentWaste = new FluidTank(null, TOTAL_WASTE_SPACE);
     }
 
     @Override
@@ -163,7 +162,9 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
     public boolean isUseableByPlayer(EntityPlayer entityPlayer)
     {
-        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && entityPlayer.getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this &&
+                entityPlayer.getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D,
+                        (double) this.zCoord + 0.5D) <= 64.0D;
     }
 
     public void setInventorySlotContents(int slotIndex, ItemStack itemStack)
@@ -334,29 +335,12 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
     public int fill(FluidStack resource, boolean doFill)
     {
-       return currentWaste.fill(resource, doFill);
+        return currentWaste.fill(resource, doFill);
     }
 
     public FluidStack drain(int maxDrain, boolean doDrain)
     {
         return currentWaste.drain(maxDrain, doDrain);
-//        if (maxDrain < currentWaste.amount) // can drain everything
-//        {
-//            if (doDrain)
-//            {
-//                currentWaste.amount -= maxDrain;
-//            }
-//            return new FluidStack(currentWaste.getFluid(), maxDrain);
-//        } else
-//        {
-//            int amountDrained = currentWaste.amount;
-//            if (doDrain)
-//            {
-//                currentWaste.amount = 0;
-//                isWasteEmpty = true;
-//            }
-//            return new FluidStack(currentWaste.getFluid(), amountDrained);
-//        }
     }
 
     public int getFuseProgressScaled(int pixels)

@@ -1,8 +1,9 @@
 package com.qkninja.unobtainium.init;
 
-import com.qkninja.unobtainium.block.BlockFluidAdamantium;
-import com.qkninja.unobtainium.block.BlockFluidQuicksilver;
-import com.qkninja.unobtainium.block.BlockFluidVibranium;
+import com.qkninja.unobtainium.block.fluid.BlockFluidAdamantium;
+import com.qkninja.unobtainium.block.fluid.BlockFluidQuicksilver;
+import com.qkninja.unobtainium.block.fluid.BlockFluidUnobtainium;
+import com.qkninja.unobtainium.block.fluid.BlockFluidVibranium;
 import com.qkninja.unobtainium.handler.BucketHandler;
 import com.qkninja.unobtainium.item.ItemAdamantiumBucket;
 import com.qkninja.unobtainium.item.ItemQuicksilverBucket;
@@ -39,12 +40,17 @@ public class ModFluidBlocks
     public static Block blockAdamantium;
     public static Item adamantiumBucket;
 
+    public static final Fluid unobtainium = new Fluid(Names.Fluids.UNOBTAINIUM_FLUID)
+            .setUnlocalizedName(Names.Fluids.UNOBTAINIUM_FLUID).setViscosity(10000);
+    public static Block blockUnobtainium;
+
 
     public static void init()
     {
         FluidRegistry.registerFluid(quicksilver);
         FluidRegistry.registerFluid(vibranium);
         FluidRegistry.registerFluid(adamantium);
+        FluidRegistry.registerFluid(unobtainium);
 
         blockQuicksilver = new BlockFluidQuicksilver(quicksilver, Material.water)
                 .setBlockName(Names.Fluids.QUICKSILVER_FLUID);
@@ -52,10 +58,13 @@ public class ModFluidBlocks
                 .setBlockName(Names.Fluids.VIBRANIUM_FLUID);
         blockAdamantium = new BlockFluidAdamantium(adamantium, Material.lava)
                 .setBlockName(Names.Fluids.ADAMANTIUM_FLUID);
+        blockUnobtainium = new BlockFluidUnobtainium(unobtainium, Material.lava)
+                .setBlockName(Names.Fluids.UNOBTAINIUM_FLUID);
 
         GameRegistry.registerBlock(blockQuicksilver, Names.Fluids.QUICKSILVER_FLUID);
         GameRegistry.registerBlock(blockVibranium, Names.Fluids.VIBRANIUM_FLUID);
         GameRegistry.registerBlock(blockAdamantium, Names.Fluids.ADAMANTIUM_FLUID);
+        GameRegistry.registerBlock(blockUnobtainium, Names.Fluids.UNOBTAINIUM_FLUID);
 
         quicksilverBucket = new ItemQuicksilverBucket(blockQuicksilver)
                 .setContainerItem(Items.bucket).setUnlocalizedName(Names.Items.QUICKSILVER_BUCKET);

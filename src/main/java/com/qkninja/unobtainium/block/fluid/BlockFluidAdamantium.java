@@ -1,4 +1,4 @@
-package com.qkninja.unobtainium.block;
+package com.qkninja.unobtainium.block.fluid;
 
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fluids.Fluid;

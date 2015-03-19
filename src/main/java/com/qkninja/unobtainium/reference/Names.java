@@ -46,6 +46,7 @@ public final class Names
         public static final String QUICKSILVER_FLUID = "fluidQuicksilver";
         public static final String VIBRANIUM_FLUID = "fluidVibranium";
         public static final String ADAMANTIUM_FLUID = "fluidAdamantium";
+        public static final String UNOBTAINIUM_FLUID = "fluidUnobtainium";
     }
 
     public static final class TileEntities

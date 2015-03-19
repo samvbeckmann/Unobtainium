@@ -1,4 +1,4 @@
-package com.qkninja.unobtainium.block;
+package com.qkninja.unobtainium.block.fluid;
 
 import com.qkninja.unobtainium.init.ModFluidBlocks;
 import com.qkninja.unobtainium.reference.Names;
@@ -13,6 +13,8 @@ import net.minecraftforge.fluids.Fluid;
 import java.util.Random;
 
 /**
+ * Quicksilver Fluid
+ *
  * @author QKninja
  */
 public class BlockFluidQuicksilver extends BlockFluidUnobtainiumMod
@@ -25,6 +27,7 @@ public class BlockFluidQuicksilver extends BlockFluidUnobtainiumMod
         quantaPerBlock = 1;
     }
 
+    @Override
     public void updateTick(World world, int x, int y, int z, Random rand)
     {
         if (canDisplace(world, x, y + densityDir, z))
@@ -34,6 +37,7 @@ public class BlockFluidQuicksilver extends BlockFluidUnobtainiumMod
         }
     }
 
+    @Override
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity player)
     {
         if (player instanceof EntityLivingBase)

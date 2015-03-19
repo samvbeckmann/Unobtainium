@@ -1,4 +1,4 @@
-package com.qkninja.unobtainium.block;
+package com.qkninja.unobtainium.block.fluid;
 
 import com.qkninja.unobtainium.creativetab.CreativeTabUnobtainium;
 import com.qkninja.unobtainium.reference.Reference;
@@ -13,6 +13,8 @@ import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
 /**
+ * Generic Mod Fluid
+ *
  * @author QKninja
  */
 public class BlockFluidUnobtainiumMod extends BlockFluidClassic
