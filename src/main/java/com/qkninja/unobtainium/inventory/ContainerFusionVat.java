@@ -37,7 +37,7 @@ public class ContainerFusionVat extends ContainerUnobtainium
     {
         super.addCraftingToCrafters(crafting);
         crafting.sendProgressBarUpdate(this, 0, this.tileEntityVat.vatCookTime);
-        crafting.sendProgressBarUpdate(this, 1, this.tileEntityVat.getWasteAmount());
+        crafting.sendProgressBarUpdate(this, 1, this.tileEntityVat.getTankAmount());
     }
 
     /**
@@ -58,14 +58,14 @@ public class ContainerFusionVat extends ContainerUnobtainium
                 iCrafting.sendProgressBarUpdate(this, 0, this.tileEntityVat.vatCookTime);
             }
 
-            if(this.lastWasteAmount != this.tileEntityVat.getWasteAmount())
+            if(this.lastWasteAmount != this.tileEntityVat.getTankAmount())
             {
-                iCrafting.sendProgressBarUpdate(this, 1, this.tileEntityVat.getWasteAmount());
+                iCrafting.sendProgressBarUpdate(this, 1, this.tileEntityVat.getTankAmount());
             }
         }
 
         this.lastCookTime = this.tileEntityVat.vatCookTime;
-        this.lastWasteAmount = this.tileEntityVat.getWasteAmount();
+        this.lastWasteAmount = this.tileEntityVat.getTankAmount();
     }
 
     /**
@@ -83,7 +83,7 @@ public class ContainerFusionVat extends ContainerUnobtainium
         }
         if (id == 1)
         {
-            this.tileEntityVat.setWasteAmount(value);
+            this.tileEntityVat.setTankAmount(value);
         }
     }
 

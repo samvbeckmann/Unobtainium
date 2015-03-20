@@ -15,7 +15,7 @@ public class GuiFusionVat extends GuiUnobtainium
 {
     private TileEntityVat tileEntityVat;
 
-    private static final int WASTE_SPHERE_SIZE = 29;
+    private static final int TANK_SPHERE_SIZE = 29;
 
     public GuiFusionVat(InventoryPlayer inventoryPlayer, TileEntityVat vat)
     {
@@ -53,15 +53,14 @@ public class GuiFusionVat extends GuiUnobtainium
             this.drawTexturedModalRect(guiLeft + 78, guiTop + 22, 176, 55, 19, fuseProgress + 1);
         }
 
-        // Draw Waste fill
-        if (tileEntityVat.hasWaste())
+        // Draw Tank fill
+        if (tileEntityVat.hasFluid())
         {
-            int waste = tileEntityVat.getWasteScaled(WASTE_SPHERE_SIZE);
-            this.drawTexturedModalRect(guiLeft + 129, guiTop + 43 + WASTE_SPHERE_SIZE - waste,
-                    176, 86 + WASTE_SPHERE_SIZE - waste,
-                    WASTE_SPHERE_SIZE, waste);
+            int tankSclaed = tileEntityVat.getTankSclaed(TANK_SPHERE_SIZE);
+            this.drawTexturedModalRect(guiLeft + 129, guiTop + 43 + TANK_SPHERE_SIZE - tankSclaed,
+                    176, 86 + TANK_SPHERE_SIZE - tankSclaed,
+                    TANK_SPHERE_SIZE, tankSclaed);
         }
-
         // Draw cooling icon
         if (tileEntityVat.hasECU())
             drawTexturedModalRect(guiLeft + 136, guiTop + 17, 195, 55, 14, 16);

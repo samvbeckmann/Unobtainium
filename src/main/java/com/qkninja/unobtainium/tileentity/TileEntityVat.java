@@ -1,6 +1,7 @@
 package com.qkninja.unobtainium.tileentity;
 
 import com.qkninja.unobtainium.init.ModBlocks;
+import com.qkninja.unobtainium.init.ModFluidBlocks;
 import com.qkninja.unobtainium.item.crafting.VatOutputs;
 import com.qkninja.unobtainium.item.crafting.VatRecipes;
 import com.qkninja.unobtainium.reference.Names;
@@ -36,20 +37,17 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
      */
     private static final int[] slotsSides = new int[]{0, 1};
 
-    private FluidTank currentWaste;
-
-    public boolean isWasteEmpty;
+    private FluidTank tank;
 
     private ItemStack[] vatItemStacks = new ItemStack[3];
     public int vatCookTime;
     private static final int TOTAL_COOK_TIME = 1000;
-    private static final int TOTAL_WASTE_SPACE = 1000;
+    private static final int TOTAL_TANK_SPACE = 1000;
 
     public TileEntityVat()
     {
         super();
-        isWasteEmpty = true;
-        currentWaste = new FluidTank(null, TOTAL_WASTE_SPACE);
+        tank = new FluidTank(null, TOTAL_TANK_SPACE);
     }
 
     @Override
@@ -209,8 +207,9 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         {
             VatOutputs outputs = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
             if (outputs == null) return false;
-            if (!outputs.getWaste().isFluidEqual(currentWaste.getFluid())) return false;
-            if (outputs.getWaste().amount + currentWaste.getFluidAmount() > TOTAL_WASTE_SPACE) return false;
+            if (!outputs.getFluid().isFluidEqual(tank.getFluid())
+                    && tank.getFluid() != null) return false;
+            if (outputs.getFluid().amount + tank.getFluidAmount() > TOTAL_TANK_SPACE) return false;
             if (this.vatItemStacks[2] == null) return true;
             if (!this.vatItemStacks[2].isItemEqual(outputs.getOutput())) return false;
             int result = vatItemStacks[2].stackSize + outputs.getOutput().stackSize;
@@ -227,7 +226,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         {
             VatOutputs result = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
             ItemStack output = result.getOutput();
-            FluidStack waste = result.getWaste();
+            FluidStack fluid = result.getFluid();
 
             if (this.vatItemStacks[2] == null)
             {
@@ -250,7 +249,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
                 this.vatItemStacks[1] = null;
             }
 
-            fill(waste, true);
+            fill(fluid, true);
         }
     }
 
@@ -259,9 +258,9 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         return this.vatCookTime > 0;
     }
 
-    public boolean hasWaste()
+    public boolean hasFluid()
     {
-        return currentWaste.getFluidAmount() != 0;
+        return tank.getFluidAmount() != 0;
     }
 
 
@@ -283,7 +282,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
             }
         }
 
-        currentWaste.readFromNBT(nbtTagCompound);
+        tank.readFromNBT(nbtTagCompound);
     }
 
     public boolean hasECU()
@@ -310,37 +309,37 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         }
         nbtTagCompound.setTag(Names.NBT.ITEMS, tagList);
 
-        currentWaste.writeToNBT(nbtTagCompound);
+        tank.writeToNBT(nbtTagCompound);
     }
 
     public FluidStack getFluid()
     {
-        return currentWaste.getFluid();
+        return tank.getFluid();
     }
 
     public int getFluidAmount()
     {
-        return currentWaste.getFluidAmount();
+        return tank.getFluidAmount();
     }
 
     public int getCapacity()
     {
-        return TOTAL_WASTE_SPACE;
+        return TOTAL_TANK_SPACE;
     }
 
     public FluidTankInfo getInfo()
     {
-        return new FluidTankInfo(currentWaste);
+        return new FluidTankInfo(tank);
     }
 
     public int fill(FluidStack resource, boolean doFill)
     {
-        return currentWaste.fill(resource, doFill);
+        return tank.fill(resource, doFill);
     }
 
     public FluidStack drain(int maxDrain, boolean doDrain)
     {
-        return currentWaste.drain(maxDrain, doDrain);
+        return tank.drain(maxDrain, doDrain);
     }
 
     public int getFuseProgressScaled(int pixels)
@@ -348,18 +347,28 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         return this.vatCookTime * pixels / TOTAL_COOK_TIME;
     }
 
-    public int getWasteScaled(int pixels)
+    public int getTankSclaed(int pixels)
     {
-        return currentWaste.getFluidAmount() * pixels / TOTAL_WASTE_SPACE;
+        return tank.getFluidAmount() * pixels / TOTAL_TANK_SPACE;
     }
 
-    public int getWasteAmount()
+    public int getTankAmount()
     {
-        return currentWaste.getFluidAmount();
+        return tank.getFluidAmount();
     }
 
-    public void setWasteAmount(int amount)
+    public void setTankAmount(int amount)
     {
-        currentWaste.getFluid().amount = amount;
+        if (tank.getFluid() == null)
+        {
+            tank.setFluid(new FluidStack(ModFluidBlocks.unobtainium, amount));
+        } else
+            tank.getFluid().amount = amount;
+//
+//        if (tank.getFluid() == null)
+//        {
+//            fill(new FluidStack(ModFluidBlocks.unobtainium, amount), true);
+//        } else
+//            fill(new FluidStack(tank.getFluid().fluidID, amount), true);
     }
 }

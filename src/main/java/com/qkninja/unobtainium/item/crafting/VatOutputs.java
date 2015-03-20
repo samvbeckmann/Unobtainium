@@ -12,11 +12,11 @@ public class VatOutputs
 {
     private ItemStack output;
 
-    private FluidStack waste;
+    private FluidStack fluid;
 
-    public FluidStack getWaste()
+    public FluidStack getFluid()
     {
-        return waste;
+        return fluid;
     }
 
     public ItemStack getOutput()
@@ -27,6 +27,6 @@ public class VatOutputs
     public VatOutputs(ItemStack output_, FluidStack waste_)
     {
         output = output_;
-        waste = waste_;
+        fluid = waste_;
     }
 }
