@@ -36,24 +36,6 @@ public abstract class GuiUnobtainium extends GuiContainer
         this.guiTexture = guiTexture_;
     }
 
-//    @Override
-//    public void initGui()
-//    {
-//        super.initGui();
-//    }
-
-//    @Override
-//    public void drawScreen(int x, int y, float partialTick)
-//    {
-//        super.drawGuiContainerForegroundLayer(x, y);
-//    }
-
-//    @Override
-//    protected void drawGuiContainerForegroundLayer(int x, int y)
-//    {
-//        super.drawGuiContainerForegroundLayer(x, y);
-//    }
-
     protected void drawGuiContainerBackgroundLayer(float partialTick, int x, int y)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
