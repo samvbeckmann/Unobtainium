@@ -20,7 +20,7 @@ public class ItemBlockECU extends ItemBlock
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4)
     {
-        list.add("\u00A7cWarning: Don't place");
-        list.add("\u00A7cnear large bodies of lava");
+        list.add("\u00A7cWarning: Don't");
+        list.add("\u00A7cplace near lava");
     }
 }

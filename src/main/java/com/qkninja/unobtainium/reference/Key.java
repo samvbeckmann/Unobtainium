@@ -5,5 +5,5 @@ package com.qkninja.unobtainium.reference;
  */
 public enum Key
 {
-    UNKNOWN, CHARGE, RELEASE;
+    UNKNOWN, CHARGE, RELEASE
 }

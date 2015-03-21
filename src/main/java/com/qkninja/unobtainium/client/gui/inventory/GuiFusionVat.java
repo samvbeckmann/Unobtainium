@@ -8,6 +8,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Creates the Gui for the Fusion Vat.
  */
@@ -16,6 +19,13 @@ public class GuiFusionVat extends GuiUnobtainium
     private TileEntityVat tileEntityVat;
 
     private static final int TANK_SPHERE_SIZE = 29;
+    private static final int TANK_STARTING_X = 129;
+    private static final int TANK_STARTING_Y = 43;
+
+    private static final int ECU_WIDTH = 14;
+    private static final int ECU_HEIGHT = 16;
+    private static final int ECU_STARTING_X = 137;
+    private static final int ECU_STARTING_Y = 17;
 
     public GuiFusionVat(InventoryPlayer inventoryPlayer, TileEntityVat vat)
     {
@@ -27,10 +37,45 @@ public class GuiFusionVat extends GuiUnobtainium
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
     @Override
-    protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_)
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         String s = StatCollector.translateToLocal(tileEntityVat.getInventoryName());
-        this.fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 4, Colors.LIGHT_GREY);
+        this.fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 5, Colors.LIGHT_GREY);
+
+        int k = (this.width - this.xSize) / 2; // X axis on GUI
+        int l = (this.height - this.ySize) / 2; // Y axis on GUI
+
+        int tankX = guiLeft + TANK_STARTING_X;
+        int tankY = guiTop + TANK_STARTING_Y;
+
+        int ecuX = guiLeft + ECU_STARTING_X;
+        int ecuY = guiTop + ECU_STARTING_Y;
+
+        // Render Tank Hover Text
+        if (mouseX > tankX && mouseX < tankX + TANK_SPHERE_SIZE && mouseY > tankY && mouseY < tankY + TANK_SPHERE_SIZE)
+        {
+            List<String> list = new ArrayList<String>();
+            if (tileEntityVat.hasFluid())
+            {
+                list.add(tileEntityVat.getFluid().getLocalizedName());
+                list.add("Amount: " + tileEntityVat.getFluidAmount() + " mB");
+            } else
+            {
+                list.add("Tank Empty");
+            }
+            this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
+        }
+
+        // Render ECU Hover Text
+        if (mouseX > ecuX && mouseX < ecuX + ECU_WIDTH && mouseY > ecuY && mouseY < ecuY + ECU_HEIGHT)
+        {
+            if (tileEntityVat.hasECU())
+            {
+                List<String> list = new ArrayList<String>();
+                list.add("ECU Active");
+                this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
+            }
+        }
     }
 
     /**
@@ -56,14 +101,15 @@ public class GuiFusionVat extends GuiUnobtainium
         // Draw Tank fill
         if (tileEntityVat.hasFluid())
         {
-            int tankSclaed = tileEntityVat.getTankSclaed(TANK_SPHERE_SIZE);
-            this.drawTexturedModalRect(guiLeft + 129, guiTop + 43 + TANK_SPHERE_SIZE - tankSclaed,
-                    176, 86 + TANK_SPHERE_SIZE - tankSclaed,
-                    TANK_SPHERE_SIZE, tankSclaed);
+            int tankScaled = tileEntityVat.getTankScaled(TANK_SPHERE_SIZE);
+            this.drawTexturedModalRect(guiLeft + TANK_STARTING_X,
+                    guiTop + TANK_STARTING_Y + TANK_SPHERE_SIZE - tankScaled,
+                    176, 86 + TANK_SPHERE_SIZE - tankScaled,
+                    TANK_SPHERE_SIZE, tankScaled);
         }
         // Draw cooling icon
         if (tileEntityVat.hasECU())
-            drawTexturedModalRect(guiLeft + 136, guiTop + 17, 195, 55, 14, 16);
+            drawTexturedModalRect(guiLeft + ECU_STARTING_X, guiTop + ECU_STARTING_Y, 195, 55, ECU_WIDTH, ECU_HEIGHT);
 
         GL11.glDisable(GL11.GL_BLEND);
 

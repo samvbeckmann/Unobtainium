@@ -2,9 +2,6 @@ package com.qkninja.unobtainium.client.handler;
 
 import com.qkninja.unobtainium.client.settings.Keybindings;
 import com.qkninja.unobtainium.reference.Key;
-import com.qkninja.unobtainium.utility.LogHelper;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
 
 /**
  * Handles key presses, allowing easy access when a set keybinding is pressed.

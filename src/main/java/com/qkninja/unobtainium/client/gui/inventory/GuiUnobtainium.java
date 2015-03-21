@@ -1,6 +1,5 @@
 package com.qkninja.unobtainium.client.gui.inventory;
 
-import com.qkninja.unobtainium.reference.Textures;
 import com.qkninja.unobtainium.utility.ResourceLocationHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;

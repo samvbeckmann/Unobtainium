@@ -1,8 +1,10 @@
 package com.qkninja.unobtainium.init;
 
+import com.qkninja.unobtainium.item.crafting.VatRecipe;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * Initializes standard crafting and furnaces recipes.
@@ -32,5 +34,11 @@ public class Recipes
         // Smelting Recipes
         GameRegistry.addSmelting(ModBlocks.mithrilOre, new ItemStack(ModItems.mithrilIngot), .1F);
         GameRegistry.addSmelting(ModItems.resinChunk, new ItemStack(ModItems.plasticChunk), .1F);
+
+        // Fusion Vat Recipes
+        VatRecipe.addRecipe(new ItemStack(Items.gold_ingot), new ItemStack(ModItems.mithrilIngot),
+                            new ItemStack(ModItems.orichalcumIngot), new FluidStack(ModFluidBlocks.quicksilver, 50));
+        VatRecipe.addRecipe(new ItemStack(ModItems.orichalcumIngot), new ItemStack(ModItems.galvornIngot),
+                            new ItemStack(ModItems.cavoriteIngot), new FluidStack(ModFluidBlocks.unobtainium, 25));
     }
 }

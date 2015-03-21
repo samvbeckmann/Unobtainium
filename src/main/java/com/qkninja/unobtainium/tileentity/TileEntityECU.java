@@ -1,11 +1,9 @@
 package com.qkninja.unobtainium.tileentity;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -13,7 +11,7 @@ import java.util.Random;
  */
 public class TileEntityECU extends TileEntityUnobtainium
 {
-//    private List<BlockPosition> activeBlocks = new ArrayList<BlockPosition>();
+    private Random rnd = new Random();
 
     public TileEntityECU()
     {
@@ -23,116 +21,34 @@ public class TileEntityECU extends TileEntityUnobtainium
     @Override
     public void updateEntity()
     {
-        // 450 blocks to be checked.
-        Random rnd = new Random();
-        int yOffset = rnd.nextInt(5);
-        int xOffset = 0;
-        if (yOffset != 0)
-            xOffset = rnd.nextInt(yOffset*2) - yOffset;
-        int zOffset = 0;
-        if (yOffset != 0)
-            zOffset = rnd.nextInt(yOffset*2) - yOffset;
+        int yOffset = rnd.nextInt(10) - 5;
+        int xOffset = rnd.nextInt(10) - 5;
+        int zOffset = rnd.nextInt(10) - 5;
 
-        if (xOffset != 0 || yOffset != 0 || zOffset != 0)
-            checkBlockForLava(xCoord + xOffset, yCoord + 5 - yOffset, zCoord + zOffset);
-
-
-
-
-        /*
-        List<BlockPosition> newActiveBlocks = new ArrayList<BlockPosition>();
-
-        // Checks all the blocks around the initial tileEntity
-        if (checkBlockForLava(xCoord-1, yCoord, zCoord))
-            newActiveBlocks.add(new BlockPosition(xCoord-1, yCoord, zCoord));
-        if (checkBlockForLava(xCoord+1, yCoord, zCoord))
-            newActiveBlocks.add(new BlockPosition(xCoord+1, yCoord, zCoord));
-        if (checkBlockForLava(xCoord, yCoord-1, zCoord))
-            newActiveBlocks.add(new BlockPosition(xCoord, yCoord-1, zCoord));
-        if (checkBlockForLava(xCoord, yCoord+1, zCoord))
-            newActiveBlocks.add(new BlockPosition(xCoord, yCoord+1, zCoord));
-        if (checkBlockForLava(xCoord, yCoord, zCoord-1))
-            newActiveBlocks.add(new BlockPosition(xCoord, yCoord, zCoord-1));
-        if (checkBlockForLava(xCoord, yCoord, zCoord+1))
-            newActiveBlocks.add(new BlockPosition(xCoord, yCoord, zCoord+1));
-
-        // Checks all the blocks around all the active blocks
-        for(BlockPosition blockToCheck : activeBlocks)
+        if ((xOffset != 0 || yOffset != 0 || zOffset != 0) &&
+                (Math.abs(xOffset) + Math.abs(yOffset) + Math.abs(zOffset) <= 5))
         {
-            int x = blockToCheck.getX();
-            int y = blockToCheck.getY();
-            int z = blockToCheck.getZ();
-
-            if (checkBlockForLava(x-1, y, z))
-                newActiveBlocks.add(new BlockPosition(x-1, y, z));
-            if (checkBlockForLava(x+1, y, z))
-                newActiveBlocks.add(new BlockPosition(x+1, y, z));
-            if (checkBlockForLava(x, y-1, z))
-                newActiveBlocks.add(new BlockPosition(x, y-1, z));
-            if (checkBlockForLava(x, y+1, z))
-                newActiveBlocks.add(new BlockPosition(x, y+1, z));
-            if (checkBlockForLava(x, y, z-1))
-                newActiveBlocks.add(new BlockPosition(x, y, z-1));
-            if (checkBlockForLava(x, y, z+1))
-                newActiveBlocks.add(new BlockPosition(x, y, z+1));
+            checkAndReplaceLava(xCoord + xOffset, yCoord + yOffset, zCoord + zOffset);
         }
-
-        activeBlocks = newActiveBlocks;
-        */
     }
 
-
-    private boolean checkBlockForLava(int x, int y, int z)
+    /**
+     * Checks given block to see if it's lava. If so, replaces that block with the appropriate cooled material.
+     * @param x x coord
+     * @param y y coord
+     * @param z z coord
+     */
+    private void checkAndReplaceLava(int x, int y, int z) // TODO: a bit buggy
     {
+        Block block = worldObj.getBlock(x, y, z);
 
-//        worldObj.setBlock(x, y, z, Blocks.gold_block);
-        return true;
-        /*
-        Block locBlock = worldObj.getBlock(x, y, z);
-        Material block = locBlock.getMaterial();
-
-        if (block == Material.lava)
+        if (block.getMaterial() == Material.lava)
         {
-            worldObj.setBlock(x, y, z, Blocks.obsidian);
-            return true;
-        } else return false;
-        */
+            if (block.equals(Blocks.flowing_lava))
+            {
+                worldObj.setBlock(x, y, z, Blocks.stone);
+            } else if (block.equals(Blocks.lava))
+                worldObj.setBlock(x, y, z, Blocks.obsidian);
+        }
     }
-
-//    @Override
-//    public void readFromNBT(NBTTagCompound nbtTagCompound)
-//    {
-//        super.readFromNBT(nbtTagCompound);
-//
-//        // Read the Active Blocks list from NBT
-//        NBTTagList tagList = nbtTagCompound.getTagList(Names.NBT.ACTIVE_BLOCKS, 10);
-//        activeBlocks = new ArrayList<BlockPosition>();
-//        for (int i = 0; i < tagList.tagCount(); ++i)
-//        {
-//            NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
-//            short BlockIndex = tagCompound.getShort("Block");
-//            if (BlockIndex >= 0 && BlockIndex < activeBlocks.size())
-//            {
-//                activeBlocks.add(BlockPosition.loadItemStackFromNBT(tagCompound));
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void writeToNBT(NBTTagCompound nbtTagCompound)
-//    {
-//        super.writeToNBT(nbtTagCompound);
-//
-//        // Write the Active Blocks list to NBT
-//        NBTTagList tagList = new NBTTagList();
-//        for (int index = 0; index < activeBlocks.size(); index++)
-//        {
-//                NBTTagCompound tagCompound = new NBTTagCompound();
-//                tagCompound.setByte("Block", (byte) index);
-//                activeBlocks.get(index).writeToNBT(tagCompound);
-//                tagList.appendTag(tagCompound);
-//        }
-//        nbtTagCompound.setTag(Names.NBT.ACTIVE_BLOCKS, tagList);
-//    }
-
 }

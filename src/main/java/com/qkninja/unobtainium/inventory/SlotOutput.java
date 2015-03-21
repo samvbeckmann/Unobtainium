@@ -5,7 +5,9 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 /**
- * Created by Sam on 2014-11-19.
+ * Generic Output Slot, no item can be inserted by players
+ *
+ * @author QK ninja
  */
 public class SlotOutput extends Slot
 {

@@ -7,7 +7,9 @@ import com.qkninja.unobtainium.init.ModBlocks;
 import com.qkninja.unobtainium.init.ModFluidBlocks;
 import com.qkninja.unobtainium.init.ModItems;
 import com.qkninja.unobtainium.init.Recipes;
-import com.qkninja.unobtainium.proxy.IProxy;
+import com.qkninja.unobtainium.network.DescriptionHandler;
+import com.qkninja.unobtainium.network.NetworkHandler;
+import com.qkninja.unobtainium.proxy.CommonProxy;
 import com.qkninja.unobtainium.reference.Reference;
 import com.qkninja.unobtainium.utility.LogHelper;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -33,7 +35,7 @@ public class Unobtainium
     public static Unobtainium instance;
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
-    public static IProxy proxy;
+    public static CommonProxy proxy;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -41,13 +43,17 @@ public class Unobtainium
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 
-        proxy.registerKeyBindings();
+        proxy.preInit();
 
         ModItems.init();
 
         ModBlocks.init();
 
         ModFluidBlocks.init();
+
+        NetworkHandler.init();
+
+        DescriptionHandler.init();
 
         LogHelper.info("Pre Initialization Complete!");
     }
@@ -58,6 +64,8 @@ public class Unobtainium
         // Register the Gui Handler
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
+        proxy.init();
+
         FMLCommonHandler.instance().bus().register(new KeyInputEventHandler());
         Recipes.init();
         LogHelper.info("Initialization Complete!");
@@ -66,6 +74,8 @@ public class Unobtainium
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
+        proxy.postInit();
+
         LogHelper.info("Post Initialization Complete!");
 
     }

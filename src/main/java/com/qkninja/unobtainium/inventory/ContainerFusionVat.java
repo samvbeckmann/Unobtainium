@@ -18,7 +18,6 @@ public class ContainerFusionVat extends ContainerUnobtainium
 {
     private final TileEntityVat tileEntityVat;
     private int lastCookTime = -1;
-    private int lastWasteAmount = -1;
 
     public ContainerFusionVat(InventoryPlayer inventoryPlayer, TileEntityVat tileEntityVat)
     {
@@ -37,7 +36,6 @@ public class ContainerFusionVat extends ContainerUnobtainium
     {
         super.addCraftingToCrafters(crafting);
         crafting.sendProgressBarUpdate(this, 0, this.tileEntityVat.vatCookTime);
-        crafting.sendProgressBarUpdate(this, 1, this.tileEntityVat.getTankAmount());
     }
 
     /**
@@ -49,7 +47,7 @@ public class ContainerFusionVat extends ContainerUnobtainium
     {
         super.detectAndSendChanges();
 
-        for (int i = 0; i < this.crafters.size(); ++i)
+         for (int i = 0; i < this.crafters.size(); ++i)
         {
             ICrafting iCrafting = (ICrafting) this.crafters.get(i);
 
@@ -57,15 +55,9 @@ public class ContainerFusionVat extends ContainerUnobtainium
             {
                 iCrafting.sendProgressBarUpdate(this, 0, this.tileEntityVat.vatCookTime);
             }
-
-            if(this.lastWasteAmount != this.tileEntityVat.getTankAmount())
-            {
-                iCrafting.sendProgressBarUpdate(this, 1, this.tileEntityVat.getTankAmount());
-            }
         }
 
         this.lastCookTime = this.tileEntityVat.vatCookTime;
-        this.lastWasteAmount = this.tileEntityVat.getTankAmount();
     }
 
     /**
@@ -80,10 +72,6 @@ public class ContainerFusionVat extends ContainerUnobtainium
         if (id == 0)
         {
             this.tileEntityVat.vatCookTime = value;
-        }
-        if (id == 1)
-        {
-            this.tileEntityVat.setTankAmount(value);
         }
     }
 

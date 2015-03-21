@@ -1,19 +1,16 @@
 package com.qkninja.unobtainium.tileentity;
 
 import com.qkninja.unobtainium.init.ModBlocks;
-import com.qkninja.unobtainium.init.ModFluidBlocks;
-import com.qkninja.unobtainium.item.crafting.VatOutputs;
-import com.qkninja.unobtainium.item.crafting.VatRecipes;
+import com.qkninja.unobtainium.item.crafting.VatRecipe;
 import com.qkninja.unobtainium.reference.Names;
+import com.qkninja.unobtainium.utility.ByteBufHelper;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.*;
 
 /**
  * Defines the processes associated with a fusion vat.
@@ -205,14 +202,37 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
             return false;
         } else
         {
-            VatOutputs outputs = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
-            if (outputs == null) return false;
-            if (!outputs.getFluid().isFluidEqual(tank.getFluid())
-                    && tank.getFluid() != null) return false;
-            if (outputs.getFluid().amount + tank.getFluidAmount() > TOTAL_TANK_SPACE) return false;
+            VatRecipe recipe = VatRecipe.getRecipe(this.vatItemStacks[0], this.vatItemStacks[1]);
+            if (recipe == null) return false; // check to see inputs make a valid output
+
+            boolean orientation12 = false;
+            if (recipe.getInput1().getItem() == this.vatItemStacks[0].getItem())
+                orientation12 = true;
+
+            // check fluid is compatible
+            if (recipe.getOutputFluid() != null)
+            {
+                if (!recipe.getOutputFluid().isFluidEqual(tank.getFluid())
+                        && tank.getFluid() != null) return false;
+                if (recipe.getOutputFluid().amount + tank.getFluidAmount() > TOTAL_TANK_SPACE) return false;
+            }
+
+            if (orientation12) // check there is enough of each input
+            {
+                if (recipe.getInput1().stackSize > this.vatItemStacks[0].stackSize) return false;
+                if (recipe.getInput2().stackSize > this.vatItemStacks[1].stackSize) return false;
+            } else
+            {
+                if (recipe.getInput1().stackSize > this.vatItemStacks[1].stackSize) return false;
+                if (recipe.getInput2().stackSize > this.vatItemStacks[0].stackSize) return false;
+            }
+
+            // check output item slot is available
             if (this.vatItemStacks[2] == null) return true;
-            if (!this.vatItemStacks[2].isItemEqual(outputs.getOutput())) return false;
-            int result = vatItemStacks[2].stackSize + outputs.getOutput().stackSize;
+
+            if (!this.vatItemStacks[2].isItemEqual(recipe.getOutputItem())) return false;
+
+            int result = vatItemStacks[2].stackSize + recipe.getOutputItem().stackSize;
             return result <= getInventoryStackLimit() && result <= this.vatItemStacks[2].getMaxStackSize();
         }
     }
@@ -224,9 +244,12 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
     {
         if (this.canCombine())
         {
-            VatOutputs result = VatRecipes.vat().getVatResult(this.vatItemStacks[0], this.vatItemStacks[1]);
-            ItemStack output = result.getOutput();
-            FluidStack fluid = result.getFluid();
+            boolean orientation12 = false;
+            VatRecipe result = VatRecipe.getRecipe(this.vatItemStacks[0], this.vatItemStacks[1]);
+            if (result.getInput1().getItem() == this.vatItemStacks[0].getItem())
+                orientation12 = true;
+            ItemStack output = result.getOutputItem();
+            FluidStack fluid = result.getOutputFluid();
 
             if (this.vatItemStacks[2] == null)
             {
@@ -236,8 +259,15 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
                 this.vatItemStacks[2].stackSize += output.stackSize;
             }
 
-            --this.vatItemStacks[0].stackSize;
-            --this.vatItemStacks[1].stackSize;
+            if (orientation12)
+            {
+                this.vatItemStacks[0].stackSize -= result.getInput1().stackSize;
+                this.vatItemStacks[1].stackSize -= result.getInput2().stackSize;
+            } else
+            {
+                this.vatItemStacks[0].stackSize -= result.getInput2().stackSize;
+                this.vatItemStacks[1].stackSize -= result.getInput1().stackSize;
+            }
 
             if (this.vatItemStacks[0].stackSize <= 0)
             {
@@ -250,6 +280,8 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
             }
 
             fill(fluid, true);
+
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
 
@@ -347,28 +379,20 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         return this.vatCookTime * pixels / TOTAL_COOK_TIME;
     }
 
-    public int getTankSclaed(int pixels)
+    public int getTankScaled(int pixels)
     {
         return tank.getFluidAmount() * pixels / TOTAL_TANK_SPACE;
     }
 
-    public int getTankAmount()
+    @Override
+    public void writeToPacket(ByteBuf buf)
     {
-        return tank.getFluidAmount();
+        ByteBufHelper.writeFluidStack(buf, tank.getFluid());
     }
 
-    public void setTankAmount(int amount)
+    @Override
+    public void readFromPacket(ByteBuf buf)
     {
-        if (tank.getFluid() == null)
-        {
-            tank.setFluid(new FluidStack(ModFluidBlocks.unobtainium, amount));
-        } else
-            tank.getFluid().amount = amount;
-//
-//        if (tank.getFluid() == null)
-//        {
-//            fill(new FluidStack(ModFluidBlocks.unobtainium, amount), true);
-//        } else
-//            fill(new FluidStack(tank.getFluid().fluidID, amount), true);
+        tank.setFluid(ByteBufHelper.readFluidStack(buf));
     }
 }

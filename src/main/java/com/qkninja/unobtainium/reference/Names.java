@@ -66,4 +66,9 @@ public final class Names
     {
         public static final String VAT = "container.unobtainium:" + Blocks.FUSION_VAT;
     }
+
+    public static final class Channels
+    {
+        public static final String DESCRIPTION_CHANNEL = "Description";
+    }
 }
