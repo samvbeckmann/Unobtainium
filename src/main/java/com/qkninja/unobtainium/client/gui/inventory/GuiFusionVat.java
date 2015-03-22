@@ -57,8 +57,8 @@ public class GuiFusionVat extends GuiUnobtainium
             List<String> list = new ArrayList<String>();
             if (tileEntityVat.hasFluid())
             {
-                list.add(tileEntityVat.getFluid().getLocalizedName());
-                list.add("Amount: " + tileEntityVat.getFluidAmount() + " mB");
+                list.add(tileEntityVat.getTankFluid().getLocalizedName());
+                list.add("Amount: " + tileEntityVat.getTankAmount() + " mB");
             } else
             {
                 list.add("Tank Empty");

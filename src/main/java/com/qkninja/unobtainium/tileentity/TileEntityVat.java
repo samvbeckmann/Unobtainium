@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.*;
  *
  * @author QK ninja
  */
-public class TileEntityVat extends TileEntityUnobtainium implements ISidedInventory, IFluidTank
+public class TileEntityVat extends TileEntityUnobtainium implements ISidedInventory
 {
     /**
      * Slots that can be accessed from the top of the vat.
@@ -39,7 +39,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
     private ItemStack[] vatItemStacks = new ItemStack[3];
     public int vatCookTime;
     private static final int TOTAL_COOK_TIME = 1000;
-    private static final int TOTAL_TANK_SPACE = 1000;
+        private static final int TOTAL_TANK_SPACE = 1000;
 
     public TileEntityVat()
     {
@@ -279,7 +279,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
                 this.vatItemStacks[1] = null;
             }
 
-            fill(fluid, true);
+            tank.fill(fluid, true);
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
@@ -344,35 +344,30 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
         tank.writeToNBT(nbtTagCompound);
     }
 
-    public FluidStack getFluid()
+    public FluidStack getTankFluid()
     {
         return tank.getFluid();
     }
 
-    public int getFluidAmount()
+    public int getTankAmount()
     {
         return tank.getFluidAmount();
     }
 
-    public int getCapacity()
-    {
-        return TOTAL_TANK_SPACE;
-    }
+//    public FluidTankInfo getInfo()
+//    {
+//        return new FluidTankInfo(tank);
+//    }
 
-    public FluidTankInfo getInfo()
-    {
-        return new FluidTankInfo(tank);
-    }
+//    public int fill(FluidStack resource, boolean doFill)
+//    {
+//        return tank.fill(resource, doFill);
+//    }
 
-    public int fill(FluidStack resource, boolean doFill)
-    {
-        return tank.fill(resource, doFill);
-    }
-
-    public FluidStack drain(int maxDrain, boolean doDrain)
-    {
-        return tank.drain(maxDrain, doDrain);
-    }
+//    public FluidStack drain(int maxDrain, boolean doDrain)
+//    {
+//        return tank.drain(maxDrain, doDrain);
+//    }
 
     public int getFuseProgressScaled(int pixels)
     {
