@@ -1,12 +1,12 @@
 package com.qkninja.unobtainium.tileentity;
 
 import com.qkninja.unobtainium.init.ModBlocks;
-import com.qkninja.unobtainium.item.crafting.VatRecipe;
 import com.qkninja.unobtainium.item.crafting.WaterjetRecipe;
 import com.qkninja.unobtainium.reference.Names;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 /**
@@ -32,7 +32,7 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
 
     private ItemStack[] waterjetStacks = new ItemStack[2];
 
-    private static final int TOTAL_RESERVOIR_SPACE = 50000;
+    public static final int TOTAL_RESERVOIR_SPACE = 50000;
 
     private static final int TOTAL_BYPRODUCT_SPACE = 1000;
 
@@ -56,12 +56,12 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
 
             if (this.canCut())
             {
-                if(this.hasRecycler())
+                if (this.hasRecycler())
                     reservoir.drain(STANDARD_DRAIN_TICK / 10, true);
                 else
                     reservoir.drain(STANDARD_DRAIN_TICK, true);
 
-                this.cutProgress ++;
+                this.cutProgress++;
 
                 if (this.cutProgress >= this.getRecipeLength() && this.getRecipeLength() != -1)
                 {
@@ -242,7 +242,7 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      *
-     * @param slot slot to set inventory
+     * @param slot  slot to set inventory
      * @param stack ItemStack to set
      */
     public void setInventorySlotContents(int slot, ItemStack stack)
@@ -299,11 +299,21 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      *
-     * @param slot slot to place item in
+     * @param slot  slot to place item in
      * @param stack ItemStack containing the item to place
      */
     public boolean isItemValidForSlot(int slot, ItemStack stack)
     {
         return slot == 0;
+    }
+
+    public int getReservoirAmount()
+    {
+        return reservoir.getFluidAmount();
+    }
+
+    public int fillResevoir(FluidStack fluidStack)
+    {
+        return this.reservoir.fill(fluidStack, true);
     }
 }

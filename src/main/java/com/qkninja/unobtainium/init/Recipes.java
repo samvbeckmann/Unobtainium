@@ -1,6 +1,7 @@
 package com.qkninja.unobtainium.init;
 
 import com.qkninja.unobtainium.item.crafting.VatRecipe;
+import com.qkninja.unobtainium.item.crafting.WaterjetRecipe;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -40,5 +41,9 @@ public class Recipes
                             new ItemStack(ModItems.orichalcumIngot), new FluidStack(ModFluidBlocks.quicksilver, 50));
         VatRecipe.addRecipe(new ItemStack(ModItems.orichalcumIngot), new ItemStack(ModItems.galvornIngot),
                             new ItemStack(ModItems.cavoriteIngot), new FluidStack(ModFluidBlocks.unobtainium, 25));
+
+        // Waterjet Recipes
+        WaterjetRecipe.addRecipe(new ItemStack(ModItems.mithrilIngot), new ItemStack(ModItems.galvornIngot),
+                new FluidStack(ModFluidBlocks.unobtainium, 25), 100);
     }
 }
