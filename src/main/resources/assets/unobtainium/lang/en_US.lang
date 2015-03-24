@@ -30,6 +30,8 @@ tile.unobtainium:resin.name=Resin
 tile.unobtainium:plastic.name=Block of Plastic
 tile.unobtainium:fusionVat.name=Fusion Vat
 tile.unobtainium:ECU.name=External Cooling Unit
+tile.unobtainium:waterjet.name=Waterjet
+tile.unobtainium:waterRecycler.name=Water Recycler
 
 # Fluids
 tile.unobtainium:fluidQuicksilver.name=Quicksilver
@@ -38,6 +40,10 @@ tile.unobtainium:fluidAdamantium.name=Adamantium
 tile.unobtainium:fluidUnobtainium.name=Unobtainium
 
 fluid.fluidQuicksilver=Quicksilver
+fluid.fluidVibranium=Vibranium
+fluid.fluidAdamantium=Adamantium
+fluid.fluidUnobtainium=Unobtainium
 
 # GUIs
 container.unobtainium:fusionVat=Fusion Vat
+container.unobtainium:waterjet=Waterjet

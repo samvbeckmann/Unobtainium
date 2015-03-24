@@ -5,5 +5,5 @@ package com.qkninja.unobtainium.reference;
  */
 public enum GUIs
 {
-    VAT
+    VAT, WATERJET
 }

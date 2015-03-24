@@ -25,6 +25,8 @@ public final class Names
         public static final String PLASTIC = "plastic";
         public static final String FUSION_VAT = "fusionVat";
         public static final String ECU = "ECU";
+        public static final String WATERJET = "waterjet";
+        public static final String WATER_RECYCLER = "waterRecycler";
     }
 
     public static final class Items
@@ -53,6 +55,7 @@ public final class Names
     {
         public static final String TILE_FUSION_VAT = "tileEntityVat";
         public static final String TILE_ECU = "tileEntityECU";
+        public static final String TILE_WATERJET = "tileEntityWaterjet";
     }
 
     public static final class NBT
@@ -65,6 +68,7 @@ public final class Names
     public static final class Containers
     {
         public static final String VAT = "container.unobtainium:" + Blocks.FUSION_VAT;
+        public static final String WATERJET = "container.unobtainium:" + Blocks.WATERJET;
     }
 
     public static final class Channels

@@ -2,6 +2,8 @@ package com.qkninja.unobtainium.tileentity;
 
 /**
  * Data type that contains x, y, and z coordinates.
+ *
+ * @deprecated
  */
 public class BlockPosition
 {

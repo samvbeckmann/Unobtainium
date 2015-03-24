@@ -1,11 +1,13 @@
 package com.qkninja.unobtainium.init;
 
 import com.qkninja.unobtainium.block.*;
+import com.qkninja.unobtainium.block.fluid.BlockWaterjet;
 import com.qkninja.unobtainium.item.ItemBlockECU;
 import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.reference.Reference;
 import com.qkninja.unobtainium.tileentity.TileEntityECU;
 import com.qkninja.unobtainium.tileentity.TileEntityVat;
+import com.qkninja.unobtainium.tileentity.TileEntityWaterjet;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -25,6 +27,8 @@ public class ModBlocks
     public static final BlockUnobtainium plastic = new BlockPlastic();
     public static final BlockUnobtainium fusionVat = new BlockFusionVat();
     public static final BlockUnobtainium externalCoolingUnit = new BlockECU();
+    public static final BlockUnobtainium waterjet = new BlockWaterjet();
+    public static final BlockUnobtainium waterRecycler = new BlockWaterRecycler();
 
 
 
@@ -43,5 +47,8 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileEntityVat.class, Names.TileEntities.TILE_FUSION_VAT);
         GameRegistry.registerBlock(externalCoolingUnit, ItemBlockECU.class, Names.Blocks.ECU);
         GameRegistry.registerTileEntity(TileEntityECU.class, Names.TileEntities.TILE_ECU);
+        GameRegistry.registerBlock(waterjet, Names.Blocks.WATERJET);
+        GameRegistry.registerTileEntity(TileEntityWaterjet.class, Names.TileEntities.TILE_WATERJET);
+        GameRegistry.registerBlock(waterRecycler, Names.Blocks.WATER_RECYCLER);
     }
 }
