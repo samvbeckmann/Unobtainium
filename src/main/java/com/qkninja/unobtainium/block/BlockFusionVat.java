@@ -25,6 +25,7 @@ public class BlockFusionVat extends BlockUnobtainium implements ITileEntityProvi
         return new TileEntityVat();
     }
 
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7, float par8, float par9)
     {
         if (world.isRemote)

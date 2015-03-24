@@ -1,9 +1,12 @@
 package com.qkninja.unobtainium.handler;
 
 import com.qkninja.unobtainium.client.gui.inventory.GuiFusionVat;
+import com.qkninja.unobtainium.client.gui.inventory.GuiWaterjet;
 import com.qkninja.unobtainium.inventory.ContainerFusionVat;
+import com.qkninja.unobtainium.inventory.ContainerWaterjet;
 import com.qkninja.unobtainium.reference.GUIs;
 import com.qkninja.unobtainium.tileentity.TileEntityVat;
+import com.qkninja.unobtainium.tileentity.TileEntityWaterjet;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -32,6 +35,10 @@ public class GuiHandler implements IGuiHandler
             case VAT:
                 TileEntityVat tileEntityVat = (TileEntityVat) world.getTileEntity(x, y, z);
                 return new ContainerFusionVat(player.inventory, tileEntityVat);
+            case WATERJET:
+                TileEntityWaterjet te = (TileEntityWaterjet) world.getTileEntity(x, y, z);
+                return new ContainerWaterjet(player.inventory, te);
+
             default:
                 throw new IllegalArgumentException("No GUI with ID " + ID);
         }
@@ -58,6 +65,10 @@ public class GuiHandler implements IGuiHandler
             case VAT:
                 TileEntityVat tileEntityVat = (TileEntityVat) world.getTileEntity(x, y, z);
                 return new GuiFusionVat(player.inventory, tileEntityVat);
+            case WATERJET:
+                TileEntityWaterjet te = (TileEntityWaterjet) world.getTileEntity(x, y, z);
+                return new GuiWaterjet(player.inventory, te);
+
             default:
                 throw new IllegalArgumentException("No GUI with ID " + ID);
         }

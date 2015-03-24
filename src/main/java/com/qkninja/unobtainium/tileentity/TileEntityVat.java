@@ -25,7 +25,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
     private static final int[] slotsTop = new int[]{0, 1};
 
     /**
-     * Solts that can be accessed from the bottom of the vat.
+     * Slots that can be accessed from the bottom of the vat.
      */
     private static final int[] slotsBottom = new int[]{2};
 

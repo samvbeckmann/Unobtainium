@@ -13,6 +13,9 @@ public class Textures
     public static final class Gui
     {
         private static final String GUI_SHEET_LOCATION = "textures/gui/";
-        public static final ResourceLocation VAT = ResourceLocationHelper.getResourceLocation(GUI_SHEET_LOCATION + "vat.png");
+        public static final ResourceLocation VAT =
+                ResourceLocationHelper.getResourceLocation(GUI_SHEET_LOCATION + "vat.png");
+        public static final ResourceLocation WATERJET =
+                ResourceLocationHelper.getResourceLocation(GUI_SHEET_LOCATION + "waterjet.png");
     }
 }

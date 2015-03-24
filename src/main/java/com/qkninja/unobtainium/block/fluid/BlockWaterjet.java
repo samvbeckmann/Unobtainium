@@ -4,7 +4,6 @@ import com.qkninja.unobtainium.Unobtainium;
 import com.qkninja.unobtainium.block.BlockUnobtainium;
 import com.qkninja.unobtainium.reference.GUIs;
 import com.qkninja.unobtainium.reference.Names;
-import com.qkninja.unobtainium.tileentity.TileEntityVat;
 import com.qkninja.unobtainium.tileentity.TileEntityWaterjet;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -13,7 +12,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
- * Created by SAM on 2015-03-22.
+ * Defines the waterjet block
+ *
+ * @author QK ninja
  */
 public class BlockWaterjet extends BlockUnobtainium implements ITileEntityProvider
 {
@@ -29,6 +30,7 @@ public class BlockWaterjet extends BlockUnobtainium implements ITileEntityProvid
         return new TileEntityWaterjet();
     }
 
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7, float par8, float par9)
     {
         if (world.isRemote)
