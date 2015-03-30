@@ -75,4 +75,18 @@ public final class Names
     {
         public static final String DESCRIPTION_CHANNEL = "Description";
     }
+
+    public static final class GuiElements
+    {
+        public static final String VAT_TANK_STATS = "unobtainium.gui.fusionvat.tankstats";
+        public static final String VAT_TANK_EMPTY = "unobtainium.gui.fusionvat.tankempty";
+        public static final String VAT_ECU = "unobtainium.gui.fusionvat.ecu";
+    }
+
+    public static final class Waila
+    {
+        public static final String VAT_WAILA_PERCENT_FUSED = "unobtainium.waila.fusionvat.pfused";
+        public static final String VAT_WAILA_TANK_STATS = "unobtainium.waila.fusionvat.tankstats";
+        public static final String VAT_WAILA_TANK_EMPTY = "unobtainium.waila.fusionvat.tankempty";
+    }
 }

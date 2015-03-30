@@ -47,3 +47,12 @@ fluid.fluidUnobtainium=Unobtainium
 # GUIs
 container.unobtainium:fusionVat=Fusion Vat
 container.unobtainium:waterjet=Waterjet
+
+unobtainium.gui.fusionvat.tankempty=Tank Empty
+unobtainium.gui.fusionvat.tankstats=Amount: %d mB
+unobtainium.gui.fusionvat.ecu=ECU Active
+
+# Waila
+unobtainium.waila.fusionvat.pfused=%% Fused
+unobtainium.waila.fusionvat.tankstats=Tank: %d mB %s
+unobtainium.waila.fusionvat.tankempty=Tank: Empty

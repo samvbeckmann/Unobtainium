@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'forge'
 
 version = "1.7.10-1.0"
-group= "com.qkninja.unobtainium" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "com.qkninja.unobtainium" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Unobtainium"
 
 minecraft {
@@ -30,7 +30,7 @@ dependencies {
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"
-      
+
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
@@ -39,6 +39,21 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+    compile "codeChicken:CodeChickenLib:1.7.10-1.1.1.95:dev"
+    compile "codeChicken:CodeChickenCore:1.7.10-1.0.4.35:dev"
+    compile "codeChicken:CodeChickenNotEnoughItems:1.7.10-1.0.4.94:dev"
+    compile "mcp.mobius.waila:waila:1.5.10_1.7.10"
+}
+
+repositories {
+    maven { // The repo from which to get waila
+        name "Mobius Repo"
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven { // the repo from which to get NEI and stuff
+        name 'CB Repo'
+        url "http://chickenbones.net/maven/"
+    }
 }
 
 processResources.doLast {
