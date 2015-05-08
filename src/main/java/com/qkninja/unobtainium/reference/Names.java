@@ -81,6 +81,10 @@ public final class Names
         public static final String VAT_TANK_STATS = "unobtainium.gui.fusionvat.tankstats";
         public static final String VAT_TANK_EMPTY = "unobtainium.gui.fusionvat.tankempty";
         public static final String VAT_ECU = "unobtainium.gui.fusionvat.ecu";
+
+        public static final String WATERJET_TANK_STATS = "unobtainium.gui.waterjet.tankstats";
+        public static final String WATERJET_TANK_EMPTY = "unobtainium.gui.waterjet.tankempty";
+        public static final String WATERJET_RECYCLER = "unobtainium.gui.waterjet.recycler";
     }
 
     public static final class Waila

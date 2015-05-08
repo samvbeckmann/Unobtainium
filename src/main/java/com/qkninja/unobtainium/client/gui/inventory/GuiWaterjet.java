@@ -2,11 +2,16 @@ package com.qkninja.unobtainium.client.gui.inventory;
 
 import com.qkninja.unobtainium.inventory.ContainerWaterjet;
 import com.qkninja.unobtainium.reference.Colors;
+import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.reference.Textures;
 import com.qkninja.unobtainium.tileentity.TileEntityWaterjet;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Draws the waterjet Gui
@@ -57,6 +62,61 @@ public class GuiWaterjet extends GuiUnobtainium
     {
         String s = StatCollector.translateToLocal(te.getInventoryName());
         this.fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 5, Colors.LIGHT_GREY);
+
+        int k = (this.width - this.xSize) / 2; // X axis on GUI
+        int l = (this.height - this.ySize) / 2; // Y axis on GUI
+
+        int reservoirX = guiLeft + WATER_TANK_STARTING_X;
+        int reservoirY = guiTop + WATER_TANK_STARTING_Y;
+
+        int byproductX = guiLeft + BYPRODUCT_STARTING_X;
+        int byproductY = guiTop + BYPRODUCT_STARTING_Y;
+
+        int recycleX = guiLeft + RECYCLE_STARTING_X;
+        int recycleY = guiTop + RECYCLE_STARTING_Y;
+
+        /* Render Reservoir Hover Text */
+        if (mouseX > reservoirX && mouseX < reservoirX + WATER_TANK_HEIGHT_WIDTH && mouseY > reservoirY &&
+                mouseY < reservoirY + WATER_TANK_HEIGHT_WIDTH)
+        {
+            List<String> list = new ArrayList<String>();
+            if (te.getReservoirAmount() != 0)
+            {
+                list.add(I18n.format(Names.GuiElements.WATERJET_TANK_STATS, te.getReservoirAmount()));
+            } else
+            {
+                list.add(I18n.format(Names.GuiElements.WATERJET_TANK_EMPTY));
+            }
+            this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
+        }
+
+        /* Render Byproduct Hover Text */
+        if (mouseX > byproductX && mouseX < byproductX + BYPRODUCT_WIDTH && mouseY > byproductY &&
+                mouseY < byproductY + BYPRODUCT_HEIGHT)
+        {
+            List<String> list = new ArrayList<String>();
+            if (te.hasByproduct())
+            {
+                list.add(te.getByproductFluid().getLocalizedName());
+                list.add(I18n.format(Names.GuiElements.WATERJET_TANK_STATS, te.getByproductAmount()));
+            } else
+            {
+                list.add(I18n.format(Names.GuiElements.VAT_TANK_EMPTY));
+            }
+            this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
+        }
+
+        /* Render Recycler Hover Text */
+        if (mouseX > recycleX && mouseX < recycleX + RECYCLE_HEIGHT_WIDTH && mouseY > recycleY &&
+                mouseY < recycleY + RECYCLE_HEIGHT_WIDTH)
+        {
+            if (te.hasRecycler())
+            {
+                List<String> list = new ArrayList<String>();
+                list.add(I18n.format(Names.GuiElements.WATERJET_RECYCLER));
+                this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
+            }
+        }
     }
 
     /**
@@ -74,21 +134,21 @@ public class GuiWaterjet extends GuiUnobtainium
         GL11.glEnable(GL11.GL_BLEND);
 
         /* Drawing the Progress Bar */
-//        if (te.getCutProgress() > 0)
-//        {
+        if (te.getCutProgress() > 0)
+        {
             int cutProgress = this.te.getCutProgressScaled(PROGRESS_BAR_WIDTH);
             this.drawTexturedModalRect(guiLeft + PROGRESS_BAR_STARTING_X, guiTop + PROGRESS_BAR_STARTING_Y, 0, 166,
                     cutProgress + 1, PROGRESS_BAR_HEIGHT);
-//        }
+        }
 
         /* Drawing Water Tank */
-        int waterScaled = WATER_TANK_HEIGHT_WIDTH; // Should be scaled value
+        int waterScaled = te.getReservoirAmountScaled(WATER_TANK_HEIGHT_WIDTH); // Should be scaled value
         this.drawTexturedModalRect(guiLeft + WATER_TANK_STARTING_X,
                 guiTop + WATER_TANK_STARTING_Y + WATER_TANK_HEIGHT_WIDTH - waterScaled, 176,
                 WATER_TANK_HEIGHT_WIDTH - waterScaled, WATER_TANK_HEIGHT_WIDTH, waterScaled);
 
         /* Drawing Byproduct Bar */
-        int byproductScaled = BYPRODUCT_HEIGHT;
+        int byproductScaled = te.getByproductScaled(BYPRODUCT_HEIGHT);
         this.drawTexturedModalRect(guiLeft + BYPRODUCT_STARTING_X,
                 guiTop + BYPRODUCT_STARTING_Y + BYPRODUCT_HEIGHT - byproductScaled, 226,
                 BYPRODUCT_HEIGHT - byproductScaled, BYPRODUCT_WIDTH, byproductScaled);

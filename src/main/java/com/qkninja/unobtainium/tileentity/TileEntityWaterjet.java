@@ -6,6 +6,7 @@ import com.qkninja.unobtainium.reference.Names;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
@@ -16,28 +17,20 @@ import net.minecraftforge.fluids.FluidTank;
  */
 public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedInventory
 {
+    public static final int TOTAL_RESERVOIR_SPACE = 50000;
     /**
      * Slots that can be accessed from the top and sides of the vat.
      */
     private static final int[] slotsTopSides = new int[]{0};
-
     /**
      * Solts that can be accessed from the bottom of the vat.
      */
     private static final int[] slotsBottom = new int[]{1};
-
-    private FluidTank reservoir;
-
-    private FluidTank byproduct;
-
-    private ItemStack[] waterjetStacks = new ItemStack[2];
-
-    public static final int TOTAL_RESERVOIR_SPACE = 50000;
-
     private static final int TOTAL_BYPRODUCT_SPACE = 1000;
-
     private static final int STANDARD_DRAIN_TICK = 1000;
-
+    private FluidTank reservoir;
+    private FluidTank byproduct;
+    private ItemStack[] waterjetStacks = new ItemStack[2];
     private int cutProgress;
 
     public TileEntityWaterjet()
@@ -318,14 +311,65 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
     }
 
     /**
-     * Gets a scaled amount of the cuts progress for use in drawing the gui
+     * Gets a scaled amount of the cuts progress
      *
-     * @param pixels total number of pixels to be rendered
+     * @param scale maximum to find a fraction of
      * @return An integer of scaled progress.
      */
-    public int getCutProgressScaled(int pixels)
+    public int getCutProgressScaled(int scale)
     {
-//        return this.cutProgress * pixels / WaterjetRecipe.getRecipe(waterjetStacks[0]).getCutTime();
-        return pixels;
+        WaterjetRecipe recipe = WaterjetRecipe.getRecipe(waterjetStacks[0]);
+        if (recipe != null)
+        {
+            return this.cutProgress * scale / WaterjetRecipe.getRecipe(waterjetStacks[0]).getCutTime();
+        } else
+            return 0;
+    }
+
+    /**
+     * Gets a scaled amount of the reservoir amount
+     *
+     * @param scale maximum to find a fraction of
+     * @return An integer of scaled progress.
+     */
+    public int getReservoirAmountScaled(int scale)
+    {
+
+        return this.getReservoirAmount() * scale / TOTAL_RESERVOIR_SPACE;
+    }
+
+    /**
+     * Gets a scaled amount of the byproduct amount
+     *
+     * @param scale maximum to find a fraction of
+     * @return An integer of scaled progress.
+     */
+    public int getByproductScaled(int scale)
+    {
+        return this.byproduct.getFluidAmount() * scale / TOTAL_BYPRODUCT_SPACE;
+    }
+
+    /**
+     * @return Whether or not there is currently a byproduct
+     */
+    public boolean hasByproduct()
+    {
+        return this.byproduct.getFluidAmount() != 0;
+    }
+
+    /**
+     * @return Fluid currently in the byproduct tank
+     */
+    public FluidStack getByproductFluid()
+    {
+        return this.byproduct.getFluid();
+    }
+
+    /**
+     * @return Amount of fluid currently in the byproduct tank.
+     */
+    public int getByproductAmount()
+    {
+        return this.byproduct.getFluidAmount();
     }
 }
