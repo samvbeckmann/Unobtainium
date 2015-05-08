@@ -23,10 +23,10 @@ public class ContainerWaterjet extends ContainerUnobtainium
     {
         this.te = te;
 
-        this.addSlotToContainer(new Slot(te, 0, 60, 16));
-        this.addSlotToContainer(new SlotOutput(te, 1, 80, 55));
+        this.addSlotToContainer(new Slot(te, 0, 42, 15));
+        this.addSlotToContainer(new SlotOutput(te, 1, 42, 51));
 
-        addPlayerSlots(player, 8, 84);
+        addPlayerSlots(player, 8, 89);
     }
 
     @Override

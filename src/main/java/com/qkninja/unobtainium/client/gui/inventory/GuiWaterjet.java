@@ -16,6 +16,11 @@ public class GuiWaterjet extends GuiUnobtainium
 {
     private TileEntityWaterjet te;
 
+    private final int PROGRESS_BAR_HEIGHT = 5;
+    private final int PROGRESS_BAR_WIDTH = 200;
+    private final int PROGRESS_BAR_STARTING_X = 7;
+    private final int PROGRESS_BAR_STARTING_Y = 72;
+
     public GuiWaterjet(InventoryPlayer inventoryPlayer, TileEntityWaterjet waterjet)
     {
         super(new ContainerWaterjet(inventoryPlayer, waterjet), Textures.Gui.WATERJET);
@@ -46,5 +51,12 @@ public class GuiWaterjet extends GuiUnobtainium
     protected void drawGuiContainerBackgroundLayer(float opacity, int x, int y)
     {
         super.drawGuiContainerBackgroundLayer(opacity, x, y);
+
+//        if (te.getCutProgress() > 0)
+//        {
+            int cutProgress = this.te.getCutProgressScaled(PROGRESS_BAR_WIDTH);
+            this.drawTexturedModalRect(guiLeft + PROGRESS_BAR_STARTING_X, guiTop + PROGRESS_BAR_STARTING_Y, 0, 169,
+                    cutProgress + 1, PROGRESS_BAR_HEIGHT);
+//        }
     }
 }

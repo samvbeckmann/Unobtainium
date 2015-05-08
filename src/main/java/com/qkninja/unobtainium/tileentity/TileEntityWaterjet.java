@@ -316,4 +316,16 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
     {
         return this.reservoir.fill(fluidStack, true);
     }
+
+    /**
+     * Gets a scaled amount of the cuts progress for use in drawing the gui
+     *
+     * @param pixels total number of pixels to be rendered
+     * @return An integer of scaled progress.
+     */
+    public int getCutProgressScaled(int pixels)
+    {
+//        return this.cutProgress * pixels / WaterjetRecipe.getRecipe(waterjetStacks[0]).getCutTime();
+        return pixels;
+    }
 }
