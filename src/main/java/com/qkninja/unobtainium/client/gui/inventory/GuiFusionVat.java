@@ -2,8 +2,10 @@ package com.qkninja.unobtainium.client.gui.inventory;
 
 import com.qkninja.unobtainium.inventory.ContainerFusionVat;
 import com.qkninja.unobtainium.reference.Colors;
+import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.reference.Textures;
 import com.qkninja.unobtainium.tileentity.TileEntityVat;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
@@ -58,10 +60,10 @@ public class GuiFusionVat extends GuiUnobtainium
             if (tileEntityVat.hasFluid())
             {
                 list.add(tileEntityVat.getTankFluid().getLocalizedName());
-                list.add("Amount: " + tileEntityVat.getTankAmount() + " mB");
+                list.add(I18n.format(Names.GuiElements.VAT_TANK_STATS, tileEntityVat.getTankAmount()));
             } else
             {
-                list.add("Tank Empty");
+                list.add(I18n.format(Names.GuiElements.VAT_TANK_EMPTY));
             }
             this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
         }
@@ -72,7 +74,7 @@ public class GuiFusionVat extends GuiUnobtainium
             if (tileEntityVat.hasECU())
             {
                 List<String> list = new ArrayList<String>();
-                list.add("ECU Active");
+                list.add(I18n.format(Names.GuiElements.VAT_ECU));
                 this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
             }
         }
@@ -107,11 +109,11 @@ public class GuiFusionVat extends GuiUnobtainium
                     176, 86 + TANK_SPHERE_SIZE - tankScaled,
                     TANK_SPHERE_SIZE, tankScaled);
         }
+
         // Draw cooling icon
         if (tileEntityVat.hasECU())
             drawTexturedModalRect(guiLeft + ECU_STARTING_X, guiTop + ECU_STARTING_Y, 195, 55, ECU_WIDTH, ECU_HEIGHT);
 
         GL11.glDisable(GL11.GL_BLEND);
-
     }
 }

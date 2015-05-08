@@ -312,7 +312,7 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
         return reservoir.getFluidAmount();
     }
 
-    public int fillResevoir(FluidStack fluidStack)
+    public int fillReservoir(FluidStack fluidStack)
     {
         return this.reservoir.fill(fluidStack, true);
     }
