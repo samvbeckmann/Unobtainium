@@ -97,7 +97,7 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
         return reservoir.getFluidAmount() >= (this.hasRecycler() ? STANDARD_DRAIN_TICK / 10 : STANDARD_DRAIN_TICK);
     }
 
-    private boolean hasRecycler()
+    public boolean hasRecycler()
     {
         return worldObj.getBlock(xCoord, yCoord - 1, zCoord).equals(ModBlocks.waterRecycler);
     }

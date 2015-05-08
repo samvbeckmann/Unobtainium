@@ -26,7 +26,7 @@ public class ContainerWaterjet extends ContainerUnobtainium
         this.addSlotToContainer(new Slot(te, 0, 42, 15));
         this.addSlotToContainer(new SlotOutput(te, 1, 42, 51));
 
-        addPlayerSlots(player, 8, 89);
+        addPlayerSlots(player, 8, 87);
     }
 
     @Override

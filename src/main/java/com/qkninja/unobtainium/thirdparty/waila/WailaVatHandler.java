@@ -28,21 +28,20 @@ public class WailaVatHandler implements IWailaDataProvider
 
     public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
-
         return currenttip;
     }
 
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
         TileEntityVat te = (TileEntityVat) accessor.getTileEntity();
-        if (te.isFusing()) // TODO Broken if tank is empty
+        if (te.isFusing()) // TODO Broken before GUI is opened
         {
-            currenttip.add(accessor.getNBTData().getInteger("progress") + I18n.format(Names.Waila.VAT_WAILA_PERCENT_FUSED));
+            currenttip.add(accessor.getNBTData().getInteger(PROGRESS) + I18n.format(Names.Waila.VAT_WAILA_PERCENT_FUSED));
         }
-        int tankAmount = accessor.getNBTData().getInteger("tankAmount");
+        int tankAmount = accessor.getNBTData().getInteger(TANK_AMOUNT);
         if (tankAmount > 0)
         {
-            currenttip.add(I18n.format(Names.Waila.VAT_WAILA_TANK_STATS, tankAmount, accessor.getNBTData().getString("fluid")));
+            currenttip.add(I18n.format(Names.Waila.VAT_WAILA_TANK_STATS, tankAmount, accessor.getNBTData().getString(FLUID)));
         } else
             currenttip.add(I18n.format(Names.Waila.VAT_WAILA_TANK_EMPTY));
         return currenttip;
@@ -56,9 +55,14 @@ public class WailaVatHandler implements IWailaDataProvider
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z)
     {
         TileEntityVat tile = (TileEntityVat) te;
-        tag.setInteger("progress", tile.getFuseProgressScaled(100));
-        tag.setInteger("tankAmount", tile.getTankAmount());
-        tag.setString("fluid", tile.getTankFluid().getLocalizedName());
+        tag.setInteger(PROGRESS, tile.getFuseProgressScaled(100));
+        tag.setInteger(TANK_AMOUNT, tile.getTankAmount());
+        tag.setString(FLUID, tile.getTankFluid().getLocalizedName());
         return tag;
     }
+
+    private static final String PROGRESS = "progress";
+    private static final String TANK_AMOUNT = "tankAmount";
+    private static final String FLUID = "fluid";
+
 }

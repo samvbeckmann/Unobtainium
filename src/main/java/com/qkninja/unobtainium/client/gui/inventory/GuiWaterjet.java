@@ -6,6 +6,7 @@ import com.qkninja.unobtainium.reference.Textures;
 import com.qkninja.unobtainium.tileentity.TileEntityWaterjet;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Draws the waterjet Gui
@@ -16,10 +17,28 @@ public class GuiWaterjet extends GuiUnobtainium
 {
     private TileEntityWaterjet te;
 
-    private final int PROGRESS_BAR_HEIGHT = 5;
-    private final int PROGRESS_BAR_WIDTH = 200;
-    private final int PROGRESS_BAR_STARTING_X = 7;
-    private final int PROGRESS_BAR_STARTING_Y = 72;
+    private static final int PROGRESS_BAR_HEIGHT = 5;
+    private static final int PROGRESS_BAR_WIDTH = 200;
+    private static final int PROGRESS_BAR_STARTING_X = 6;
+    private static final int PROGRESS_BAR_STARTING_Y = 72;
+
+    private static final int WATER_TANK_HEIGHT_WIDTH = 50;
+    private static final int WATER_TANK_STARTING_X = 71;
+    private static final int WATER_TANK_STARTING_Y = 16;
+
+    private static final int BYPRODUCT_HEIGHT = 51;
+    private static final int BYPRODUCT_WIDTH = 6;
+    private static final int BYPRODUCT_STARTING_X = 130;
+    private static final int BYPRODUCT_STARTING_Y = 15;
+
+    private static final int RECYCLE_HEIGHT_WIDTH = 21;
+    private static final int RECYCLE_STARTING_X = 145;
+    private static final int RECYCLE_STARTING_Y = 29;
+
+    private static final int ENERGY_BAR_HEIGHT = 50;
+    private static final int ENERGY_BAR_WIDTH = 23;
+    private static final int ENERGY_BAR_STARTING_X = 9;
+    private static final int ENERGY_BAR_STARTING_Y = 16;
 
     public GuiWaterjet(InventoryPlayer inventoryPlayer, TileEntityWaterjet waterjet)
     {
@@ -34,7 +53,7 @@ public class GuiWaterjet extends GuiUnobtainium
      * @param mouseY y position of the mouse
      */
     @Override
-    protected  void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         String s = StatCollector.translateToLocal(te.getInventoryName());
         this.fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 5, Colors.LIGHT_GREY);
@@ -52,11 +71,41 @@ public class GuiWaterjet extends GuiUnobtainium
     {
         super.drawGuiContainerBackgroundLayer(opacity, x, y);
 
+        GL11.glEnable(GL11.GL_BLEND);
+
+        /* Drawing the Progress Bar */
 //        if (te.getCutProgress() > 0)
 //        {
             int cutProgress = this.te.getCutProgressScaled(PROGRESS_BAR_WIDTH);
-            this.drawTexturedModalRect(guiLeft + PROGRESS_BAR_STARTING_X, guiTop + PROGRESS_BAR_STARTING_Y, 0, 169,
+            this.drawTexturedModalRect(guiLeft + PROGRESS_BAR_STARTING_X, guiTop + PROGRESS_BAR_STARTING_Y, 0, 166,
                     cutProgress + 1, PROGRESS_BAR_HEIGHT);
 //        }
+
+        /* Drawing Water Tank */
+        int waterScaled = WATER_TANK_HEIGHT_WIDTH; // Should be scaled value
+        this.drawTexturedModalRect(guiLeft + WATER_TANK_STARTING_X,
+                guiTop + WATER_TANK_STARTING_Y + WATER_TANK_HEIGHT_WIDTH - waterScaled, 176,
+                WATER_TANK_HEIGHT_WIDTH - waterScaled, WATER_TANK_HEIGHT_WIDTH, waterScaled);
+
+        /* Drawing Byproduct Bar */
+        int byproductScaled = BYPRODUCT_HEIGHT;
+        this.drawTexturedModalRect(guiLeft + BYPRODUCT_STARTING_X,
+                guiTop + BYPRODUCT_STARTING_Y + BYPRODUCT_HEIGHT - byproductScaled, 226,
+                BYPRODUCT_HEIGHT - byproductScaled, BYPRODUCT_WIDTH, byproductScaled);
+
+        /* Drawing Recycle Symbol */
+        if (te.hasRecycler())
+        {
+            this.drawTexturedModalRect(guiLeft + RECYCLE_STARTING_X, guiTop + RECYCLE_STARTING_Y, 176, 50,
+                    RECYCLE_HEIGHT_WIDTH, RECYCLE_HEIGHT_WIDTH);
+        }
+
+        /* Drawing the Energy Bars */
+        int energy = 0; // Should be a scaled value when energy is added
+        this.drawTexturedModalRect(guiLeft + ENERGY_BAR_STARTING_X,
+                guiTop + ENERGY_BAR_STARTING_Y + ENERGY_BAR_HEIGHT- energy, 232,
+                ENERGY_BAR_HEIGHT - energy, ENERGY_BAR_WIDTH, energy);
+
+        GL11.glDisable(GL11.GL_BLEND);
     }
 }

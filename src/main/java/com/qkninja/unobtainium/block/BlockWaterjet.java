@@ -1,4 +1,4 @@
-package com.qkninja.unobtainium.block.fluid;
+package com.qkninja.unobtainium.block;
 
 import com.qkninja.unobtainium.Unobtainium;
 import com.qkninja.unobtainium.block.BlockUnobtainium;

@@ -1,7 +1,7 @@
 package com.qkninja.unobtainium.init;
 
 import com.qkninja.unobtainium.block.*;
-import com.qkninja.unobtainium.block.fluid.BlockWaterjet;
+import com.qkninja.unobtainium.block.BlockWaterjet;
 import com.qkninja.unobtainium.item.ItemBlockECU;
 import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.reference.Reference;
