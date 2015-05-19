@@ -1,6 +1,7 @@
 package com.qkninja.unobtainium.tileentity;
 
 import com.qkninja.unobtainium.init.ModBlocks;
+import com.qkninja.unobtainium.init.ModFluidBlocks;
 import com.qkninja.unobtainium.item.crafting.VatRecipe;
 import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.utility.ByteBufHelper;
@@ -72,6 +73,12 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
                 this.vatCookTime = 0;
             }
         }
+
+        if (tank.getFluid() == null)
+        {
+            worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+        } else if (tank.getFluid().getFluid() == ModFluidBlocks.unobtainium)
+            worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
 
         if (flag)
         {

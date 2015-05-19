@@ -13,11 +13,14 @@ import net.minecraft.world.World;
 public class BlockFusionVat extends BlockUnobtainium implements ITileEntityProvider
 {
 
-    public BlockFusionVat()
+    public BlockFusionVat(int meta)
     {
         super(Material.rock);
         this.setBlockName(Names.Blocks.FUSION_VAT);
-        this.setHardness(2.0f);
+        if (meta == 1)
+            this.setBlockUnbreakable();
+        else
+            this.setHardness(2.0f);
     }
 
     public TileEntity createNewTileEntity(World world, int metaData)

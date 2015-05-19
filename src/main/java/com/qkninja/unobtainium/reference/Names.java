@@ -92,5 +92,10 @@ public final class Names
         public static final String VAT_WAILA_PERCENT_FUSED = "unobtainium.waila.fusionvat.pfused";
         public static final String VAT_WAILA_TANK_STATS = "unobtainium.waila.fusionvat.tankstats";
         public static final String VAT_WAILA_TANK_EMPTY = "unobtainium.waila.fusionvat.tankempty";
+
+        public static final String WATERJET_WAILA_PERCENT_CUT = "unobtainium.waila.waterjet.pfused";
+        public static final String WATERJET_WAILA_RESERVOIR_STATS = "unobtainium.waila.waterjet.reservoirstats";
+        public static final String WATERJET_WAILA_BYPRODUCT_STATS = "unobtainium.waila.waterjet.byproductstats";
+//        public static final String VAT_WAILA_TANK_EMPTY = "unobtainium.waila.fusionvat.tankempty";
     }
 }
