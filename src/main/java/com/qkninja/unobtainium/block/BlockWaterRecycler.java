@@ -1,14 +1,18 @@
 package com.qkninja.unobtainium.block;
 
 import com.qkninja.unobtainium.reference.Names;
+import com.qkninja.unobtainium.tileentity.TileEntityWaterRecycler;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 /**
  * Defines the Water Recycler Block
  *
  * @author QK ninja
  */
-public class BlockWaterRecycler extends BlockUnobtainium
+public class BlockWaterRecycler extends BlockUnobtainium implements ITileEntityProvider
 {
     public BlockWaterRecycler()
     {
@@ -36,4 +40,8 @@ public class BlockWaterRecycler extends BlockUnobtainium
         return false;
     }
 
+    public TileEntity createNewTileEntity(World world, int metadata)
+    {
+        return new TileEntityWaterRecycler();
+    }
 }

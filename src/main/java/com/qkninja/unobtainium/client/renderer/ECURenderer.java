@@ -1,6 +1,6 @@
 package com.qkninja.unobtainium.client.renderer;
 
-import com.qkninja.unobtainium.client.model.WaterRecyclerModel;
+import com.qkninja.unobtainium.client.model.ECUModel;
 import com.qkninja.unobtainium.utility.ResourceLocationHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -14,22 +14,22 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 /**
- * Created by sam on 5/8/15.
+ * Created by sam on 5/19/15.
  */
-public class WaterRecyclerRenderer extends TileEntitySpecialRenderer
+public class ECURenderer extends TileEntitySpecialRenderer
 {
-    private final WaterRecyclerModel model;
+    private final ECUModel model;
 
-    public WaterRecyclerRenderer()
+    public ECURenderer()
     {
-        this.model = new WaterRecyclerModel();
+        this.model = new ECUModel();
     }
 
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale)
     {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
-        ResourceLocation textures = ResourceLocationHelper.getResourceLocation("textures/blocks/waterRecycler.png");
+        ResourceLocation textures = ResourceLocationHelper.getResourceLocation("textures/blocks/waterRecycler.png"); // TODO
         Minecraft.getMinecraft().renderEngine.bindTexture(textures);
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
@@ -38,7 +38,7 @@ public class WaterRecyclerRenderer extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
     }
 
-    /* Perhapds makes the lighting right */
+    /* Perhaps makes the lighting right */
 //    private void adjustLightFixture(World world, int i, int j, int k, Block block)
 //    {
 //        Tessellator tess = Tessellator.instance;

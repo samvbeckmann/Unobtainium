@@ -7,6 +7,7 @@ import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.reference.Reference;
 import com.qkninja.unobtainium.tileentity.TileEntityECU;
 import com.qkninja.unobtainium.tileentity.TileEntityVat;
+import com.qkninja.unobtainium.tileentity.TileEntityWaterRecycler;
 import com.qkninja.unobtainium.tileentity.TileEntityWaterjet;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -50,5 +51,6 @@ public class ModBlocks
         GameRegistry.registerBlock(waterjet, Names.Blocks.WATERJET);
         GameRegistry.registerTileEntity(TileEntityWaterjet.class, Names.TileEntities.TILE_WATERJET);
         GameRegistry.registerBlock(waterRecycler, Names.Blocks.WATER_RECYCLER);
+        GameRegistry.registerTileEntity(TileEntityWaterRecycler.class, Names.TileEntities.TILE_WATER_RECYCLER);
     }
 }
