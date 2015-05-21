@@ -60,3 +60,7 @@ unobtainium.gui.waterjet.recycler=Recycler Active
 unobtainium.waila.fusionvat.pfused=%% Fused
 unobtainium.waila.fusionvat.tankstats=Tank: %d mB %s
 unobtainium.waila.fusionvat.tankempty=Tank: Empty
+
+unobtainium.waila.waterjet.pfused=%% Cut
+unobtainium.waila.waterjet.reservoirstats=Water: %d mB
+unobtainium.waila.waterjet.byproductstats=%d mB %s

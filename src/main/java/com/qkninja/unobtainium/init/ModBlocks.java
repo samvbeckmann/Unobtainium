@@ -26,7 +26,7 @@ public class ModBlocks
     public static final BlockUnobtainium cavorite = new BlockCavorite();
     public static final BlockUnobtainium oilResin = new BlockOilResin();
     public static final BlockUnobtainium plastic = new BlockPlastic();
-    public static final BlockUnobtainium fusionVat = new BlockFusionVat();
+    public static final BlockUnobtainium fusionVat = new BlockFusionVat(0);
     public static final BlockUnobtainium externalCoolingUnit = new BlockECU();
     public static final BlockUnobtainium waterjet = new BlockWaterjet();
     public static final BlockUnobtainium waterRecycler = new BlockWaterRecycler();
