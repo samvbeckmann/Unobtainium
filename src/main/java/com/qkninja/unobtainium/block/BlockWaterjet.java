@@ -27,6 +27,7 @@ public class BlockWaterjet extends BlockUnobtainium implements ITileEntityProvid
         super(Material.rock);
         this.setBlockName(Names.Blocks.WATERJET);
         this.setHardness(2.0f);
+        this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 1.0F, 0.9375F);
     }
 
     public TileEntity createNewTileEntity(World world, int metaData)
@@ -62,5 +63,23 @@ public class BlockWaterjet extends BlockUnobtainium implements ITileEntityProvid
             }
             return true;
         }
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
+
+    @Override
+    public int getRenderType()
+    {
+        return -1;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
     }
 }

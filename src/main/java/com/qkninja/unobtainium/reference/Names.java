@@ -56,6 +56,7 @@ public final class Names
         public static final String TILE_FUSION_VAT = "tileEntityVat";
         public static final String TILE_ECU = "tileEntityECU";
         public static final String TILE_WATERJET = "tileEntityWaterjet";
+        public static final String TILE_WATER_RECYCLER = "tileWaterRecycler";
     }
 
     public static final class NBT
