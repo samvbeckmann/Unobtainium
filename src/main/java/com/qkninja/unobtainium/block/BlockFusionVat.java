@@ -8,6 +8,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockFusionVat extends BlockUnobtainium implements ITileEntityProvider
@@ -17,11 +18,26 @@ public class BlockFusionVat extends BlockUnobtainium implements ITileEntityProvi
     {
         super(Material.rock);
         this.setBlockName(Names.Blocks.FUSION_VAT);
-        if (meta == 1)
-            this.setBlockUnbreakable();
+        this.setHardness(2.0f);
+    }
+
+    /**
+     * Makes the block indestructible if metadata is 1
+     *
+     * @param world
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
+    {
+        int metadata = world.getBlockMetadata(x, y, z);
+        if (metadata == 1)
+            this.setHardness(-1);
         else
             this.setHardness(2.0f);
     }
+
 
     public TileEntity createNewTileEntity(World world, int metaData)
     {

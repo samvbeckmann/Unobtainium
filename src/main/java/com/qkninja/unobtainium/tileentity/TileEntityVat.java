@@ -76,8 +76,10 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
         if (tank.getFluid() == null)
         {
-            worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+            worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
         } else if (tank.getFluid().getFluid() == ModFluidBlocks.unobtainium)
+            worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 2);
+        else
             worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
 
         if (flag)
