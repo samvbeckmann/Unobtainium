@@ -1,6 +1,7 @@
 package com.qkninja.unobtainium.inventory;
 
 import com.qkninja.unobtainium.tileentity.TileEntityWaterjet;
+import com.qkninja.unobtainium.utility.LogHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +19,7 @@ public class ContainerWaterjet extends ContainerUnobtainium
 {
     private final TileEntityWaterjet te;
     private int lastCutTime = -1;
+    private int lastReservoirAmount = -1;
 
     public ContainerWaterjet(InventoryPlayer player, TileEntityWaterjet te)
     {
@@ -53,23 +55,36 @@ public class ContainerWaterjet extends ContainerUnobtainium
             {
                 iCrafting.sendProgressBarUpdate(this, 0, this.te.getCutProgress());
             }
+            if (this.lastReservoirAmount != this.te.getReservoirAmount())
+            {
+                iCrafting.sendProgressBarUpdate(this, 1, this.te.getReservoirAmount());
+            }
         }
 
         this.lastCutTime = this.te.getCutProgress();
+        this.lastReservoirAmount = this.te.getReservoirAmount();
     }
 
     /**
      * Updates data on the client side.
      *
-     * @param id What piece of data is being received
+     * @param id    What piece of data is being received
      * @param value Value of the piece of data being received
      */
     @SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int value)
     {
-        if (id == 0)
+        switch (id)
         {
-            this.te.setCutProgress(value);
+            case 0:
+                this.te.setCutProgress(value);
+                break;
+
+            case 1:
+                this.te.setReservoirAmount(value);
+                break;
+            default:
+                LogHelper.error("Incorrect ID sent with waterjet container.");
         }
     }
 

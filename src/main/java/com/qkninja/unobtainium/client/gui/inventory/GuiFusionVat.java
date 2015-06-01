@@ -101,14 +101,11 @@ public class GuiFusionVat extends GuiUnobtainium
         }
 
         // Draw Tank fill
-        if (tileEntityVat.hasFluid())
-        {
-            int tankScaled = tileEntityVat.getTankScaled(TANK_SPHERE_SIZE);
-            this.drawTexturedModalRect(guiLeft + TANK_STARTING_X,
-                    guiTop + TANK_STARTING_Y + TANK_SPHERE_SIZE - tankScaled,
-                    176, 86 + TANK_SPHERE_SIZE - tankScaled,
-                    TANK_SPHERE_SIZE, tankScaled);
-        }
+        int tankScaled = tileEntityVat.getTankScaled(TANK_SPHERE_SIZE);
+        this.drawTexturedModalRect(guiLeft + TANK_STARTING_X,
+                guiTop + TANK_STARTING_Y + TANK_SPHERE_SIZE - tankScaled,
+                176, 86 + TANK_SPHERE_SIZE - tankScaled,
+                TANK_SPHERE_SIZE, tankScaled);
 
         // Draw cooling icon
         if (tileEntityVat.hasECU())

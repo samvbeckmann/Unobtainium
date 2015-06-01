@@ -34,7 +34,7 @@ public class WailaVatHandler implements IWailaDataProvider
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
         TileEntityVat te = (TileEntityVat) accessor.getTileEntity();
-        if (te.isFusing()) // TODO Broken before GUI is opened
+        if (te.isFusing())
         {
             currenttip.add(accessor.getNBTData().getInteger(PROGRESS) + I18n.format(Names.Waila.VAT_WAILA_PERCENT_FUSED));
         }
@@ -42,8 +42,7 @@ public class WailaVatHandler implements IWailaDataProvider
         if (tankAmount > 0)
         {
             currenttip.add(I18n.format(Names.Waila.VAT_WAILA_TANK_STATS, tankAmount, accessor.getNBTData().getString(FLUID)));
-        } else
-            currenttip.add(I18n.format(Names.Waila.VAT_WAILA_TANK_EMPTY));
+        }
         return currenttip;
     }
 
@@ -56,8 +55,12 @@ public class WailaVatHandler implements IWailaDataProvider
     {
         TileEntityVat tile = (TileEntityVat) te;
         tag.setInteger(PROGRESS, tile.getFuseProgressScaled(100));
-        tag.setInteger(TANK_AMOUNT, tile.getTankAmount());
+        int tankAmount = tile.getTankAmount();
+        tag.setInteger(TANK_AMOUNT, tankAmount);
+        if (tankAmount != 0)
         tag.setString(FLUID, tile.getTankFluid().getLocalizedName());
+        else
+            tag.setString(FLUID, "");
         return tag;
     }
 

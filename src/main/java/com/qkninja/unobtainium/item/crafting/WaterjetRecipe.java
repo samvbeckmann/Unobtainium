@@ -43,10 +43,13 @@ public class WaterjetRecipe
 
     public static WaterjetRecipe getRecipe(ItemStack input)
     {
-        for (WaterjetRecipe recipe : recipes)
+        if (input != null)
         {
-            if (recipe.input.getItem() == input.getItem())
-                return recipe;
+            for (WaterjetRecipe recipe : recipes)
+            {
+                if (recipe.input.getItem() == input.getItem())
+                    return recipe;
+            }
         }
 
         // Recipe doesn't exist.

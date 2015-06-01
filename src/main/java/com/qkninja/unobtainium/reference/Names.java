@@ -63,7 +63,9 @@ public final class Names
     {
         public static final String ITEMS = "Items";
         public static final String CUSTOM_NAME = "CustomName";
-//        public static final String ACTIVE_BLOCKS = "ActiveBlocks";
+        public static final String RESERVOIR = "Reservoir";
+        public static final String BYPRODUCT = "Byproduct";
+        public static final String PROGRESS = "Progress";
     }
 
     public static final class Containers

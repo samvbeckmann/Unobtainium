@@ -322,6 +322,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
                 vatItemStacks[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
             }
         }
+        vatCookTime = nbtTagCompound.getShort(Names.NBT.PROGRESS);
 
         tank.readFromNBT(nbtTagCompound);
     }
@@ -349,6 +350,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
             }
         }
         nbtTagCompound.setTag(Names.NBT.ITEMS, tagList);
+        nbtTagCompound.setShort(Names.NBT.PROGRESS, (short) vatCookTime);
 
         tank.writeToNBT(nbtTagCompound);
     }

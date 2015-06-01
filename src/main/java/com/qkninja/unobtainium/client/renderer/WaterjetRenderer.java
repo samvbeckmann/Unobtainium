@@ -2,6 +2,7 @@ package com.qkninja.unobtainium.client.renderer;
 
 import com.qkninja.unobtainium.client.model.ModelWaterjetWater;
 import com.qkninja.unobtainium.client.model.WaterjetModel;
+import com.qkninja.unobtainium.tileentity.TileEntityWaterjet;
 import com.qkninja.unobtainium.utility.ResourceLocationHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -12,7 +13,9 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 /**
- * Created by sam on 5/19/15.
+ * Special Renderer for the waterjet
+ *
+ * @author QKninja
  */
 public class WaterjetRenderer extends TileEntitySpecialRenderer
 {
@@ -25,6 +28,8 @@ public class WaterjetRenderer extends TileEntitySpecialRenderer
 
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale)
     {
+        TileEntityWaterjet tileEntity = (TileEntityWaterjet) te;
+
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
         ResourceLocation textures = ResourceLocationHelper.getResourceLocation("textures/blocks/waterRecycler.png"); // TODO
@@ -34,10 +39,20 @@ public class WaterjetRenderer extends TileEntitySpecialRenderer
         this.model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
         GL11.glPopMatrix();
         GL11.glPopMatrix();
-        drawWater(x, y, z, scale);
+
+        if (tileEntity.getReservoirAmount() != 0)
+            drawWater(x, y, z, scale);
 
     }
 
+    /**
+     * Renders water in the waterjet if the reservoir is not empty.
+     *
+     * @param x xCoord
+     * @param y yCoord
+     * @param z zCoord
+     * @param scale scale
+     */
     private void drawWater(double x, double y, double z, float scale)
     {
         ModelWaterjetWater water = new ModelWaterjetWater();

@@ -3,10 +3,16 @@ package com.qkninja.unobtainium.tileentity;
 import com.qkninja.unobtainium.init.ModBlocks;
 import com.qkninja.unobtainium.item.crafting.WaterjetRecipe;
 import com.qkninja.unobtainium.reference.Names;
+import com.qkninja.unobtainium.utility.ByteBufHelper;
+import com.qkninja.unobtainium.utility.LogHelper;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
@@ -50,18 +56,24 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
             if (this.canCut())
             {
                 if (this.hasRecycler())
-                    reservoir.drain(STANDARD_DRAIN_TICK / 10, true);
+                {
+                    this.reservoir.drain(STANDARD_DRAIN_TICK / 10, true);
+                }
                 else
-                    reservoir.drain(STANDARD_DRAIN_TICK, true);
+                {
+                    this.reservoir.drain(STANDARD_DRAIN_TICK, true);
+//                    LogHelper.info(worldObj.isRemote ? "[Server]" : "[Client]" + "Current Reservoir: " + reservoir.getFluidAmount());
+                }
 
                 this.cutProgress++;
+//                this.worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, reservoir.getFluidAmount());
 
                 if (this.cutProgress >= this.getRecipeLength() && this.getRecipeLength() != -1)
                 {
                     this.doCut();
-                    flag = true;
                 }
-            }
+            } else if (waterjetStacks[0] == null)
+                cutProgress = 0;
 
             if (flag)
                 this.markDirty();
@@ -76,7 +88,7 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
 
         if (recipe == null) return false;
         if (recipe.getInput().stackSize > waterjetStacks[0].stackSize) return false;
-        if (recipe.getOutputFluid() != null)
+        if (recipe.getOutputFluid() != null && byproduct.getFluid() != null)
         {
             if (recipe.getOutputFluid().amount + byproduct.getFluidAmount() > TOTAL_BYPRODUCT_SPACE) return false;
             if (recipe.getOutputFluid().getFluid() != byproduct.getFluid().getFluid()) return false;
@@ -129,6 +141,8 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
     {
         this.cutProgress = cutProgress;
     }
+
+
 
     /**
      * Returns an array containing the indices of the slots that can be accessed by automation on the given side of this
@@ -305,6 +319,11 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
         return reservoir.getFluidAmount();
     }
 
+    public void setReservoirAmount(int amount)
+    {
+        reservoir.setFluid(new FluidStack(FluidRegistry.WATER, amount));
+    }
+
     public int fillReservoir(FluidStack fluidStack)
     {
         return this.reservoir.fill(fluidStack, true);
@@ -372,4 +391,86 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
     {
         return this.byproduct.getFluidAmount();
     }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag)
+    {
+        super.readFromNBT(tag);
+
+        // Read in the ItemStacks in the inventory from NBT
+        NBTTagList tagList = tag.getTagList(Names.NBT.ITEMS, 10);
+        waterjetStacks = new ItemStack[this.getSizeInventory()];
+        for (int i = 0; i < tagList.tagCount(); ++i)
+        {
+            NBTTagCompound tagCompound = tagList.getCompoundTagAt(i);
+            byte slotIndex = tagCompound.getByte("Slot");
+            if (slotIndex >= 0 && slotIndex < waterjetStacks.length)
+            {
+                waterjetStacks[slotIndex] = ItemStack.loadItemStackFromNBT(tagCompound);
+            }
+        }
+        cutProgress = tag.getShort(Names.NBT.PROGRESS);
+
+        reservoir.readFromNBT(tag.getCompoundTag(Names.NBT.RESERVOIR));
+        byproduct.readFromNBT(tag.getCompoundTag(Names.NBT.BYPRODUCT));
+    }
+
+    @Override
+    public void  writeToNBT(NBTTagCompound tag)
+    {
+        super.writeToNBT(tag);
+
+        // Write the ItemStacks in the inventory to NBT
+        NBTTagList tagList = new NBTTagList();
+        for (int currentIndex = 0; currentIndex < waterjetStacks.length; ++currentIndex)
+        {
+            if (waterjetStacks[currentIndex] != null)
+            {
+                NBTTagCompound tagCompound = new NBTTagCompound();
+                tagCompound.setByte("Slot", (byte) currentIndex);
+                waterjetStacks[currentIndex].writeToNBT(tagCompound);
+                tagList.appendTag(tagCompound);
+            }
+        }
+        tag.setTag(Names.NBT.ITEMS, tagList);
+        tag.setShort(Names.NBT.PROGRESS, (short) this.cutProgress);
+
+        /* Write contents of tanks to NBT */
+        NBTTagCompound reservoirTank = new NBTTagCompound();
+        reservoir.writeToNBT(reservoirTank);
+
+        NBTTagCompound byproductTank = new NBTTagCompound();
+        byproduct.writeToNBT(byproductTank);
+
+        tag.setTag(Names.NBT.RESERVOIR, reservoirTank);
+        tag.setTag(Names.NBT.BYPRODUCT, byproductTank);
+    }
+
+    @Override
+    public void writeToPacket(ByteBuf buf)
+    {
+        ByteBufHelper.writeFluidStack(buf, reservoir.getFluid());
+        ByteBufHelper.writeFluidStack(buf, byproduct.getFluid());
+    }
+
+    @Override
+    public void readFromPacket(ByteBuf buf)
+    {
+        reservoir.setFluid(ByteBufHelper.readFluidStack(buf));
+        byproduct.setFluid(ByteBufHelper.readFluidStack(buf));
+    }
+
+//    @Override
+//    public boolean receiveClientEvent(int action, int param)
+//    {
+//        switch (action)
+//        {
+//            case 0:
+//                setReservoirAmount(param);
+//                return true;
+//            default:
+//                LogHelper.error("Error receiving client event in waterjet");
+//                return false;
+//        }
+//    }
 }

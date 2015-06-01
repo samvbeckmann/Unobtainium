@@ -41,7 +41,7 @@ public class BlockWaterjet extends BlockUnobtainium implements ITileEntityProvid
         if (entityPlayer.getHeldItem() != null && entityPlayer.getHeldItem().getItem() == (Items.water_bucket))
         {
             TileEntityWaterjet te = (TileEntityWaterjet) world.getTileEntity(x, y, z);
-            if (te.getReservoirAmount() + 1000 < TileEntityWaterjet.TOTAL_RESERVOIR_SPACE)
+            if (te.getReservoirAmount() + 1000 <= TileEntityWaterjet.TOTAL_RESERVOIR_SPACE)
             {
                 te.fillReservoir(new FluidStack(FluidRegistry.WATER, 1000));
                 if (!entityPlayer.capabilities.isCreativeMode)
