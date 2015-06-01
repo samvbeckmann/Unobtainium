@@ -48,19 +48,13 @@ fluid.fluidUnobtainium=Unobtainium
 container.unobtainium:fusionVat=Fusion Vat
 container.unobtainium:waterjet=Waterjet
 
-unobtainium.gui.fusionvat.tankempty=Tank Empty
-unobtainium.gui.fusionvat.tankstats=%d mB
-unobtainium.gui.fusionvat.ecu=ECU Active
-
-unobtainium.gui.waterjet.tankempty=Tank Empty
-unobtainium.gui.waterjet.tankstats=%d mB
-unobtainium.gui.waterjet.recycler=Recycler Active
+unobtainium.gui.tankempty=Tank Empty
+unobtainium.gui.tankamount=%d mB
+unobtainium.gui.ecuactive=ECU Active
+unobtainium.gui.recycleractive=Recycler Active
 
 # Waila
-unobtainium.waila.fusionvat.pfused=%% Fused
-unobtainium.waila.fusionvat.tankstats=Tank: %d mB %s
-unobtainium.waila.fusionvat.tankempty=Tank: Empty
-
-unobtainium.waila.waterjet.pfused=%% Cut
-unobtainium.waila.waterjet.reservoirstats=Water: %d mB
-unobtainium.waila.waterjet.byproductstats=%d mB %s
+unobtainium.waila.percentfused=%% Fused
+unobtainium.waila.tankstats=Tank: %d mB %s
+unobtainium.waila.percentcut=%% Cut
+unobtainium.waila.reservoirstats=Water: %d mB

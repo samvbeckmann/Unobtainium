@@ -60,21 +60,21 @@ public class GuiFusionVat extends GuiUnobtainium
             if (tileEntityVat.hasFluid())
             {
                 list.add(tileEntityVat.getTankFluid().getLocalizedName());
-                list.add(I18n.format(Names.GuiElements.VAT_TANK_STATS, tileEntityVat.getTankAmount()));
+                list.add(I18n.format(Names.GuiElements.TANK_AMOUNT, tileEntityVat.getTankAmount()));
             } else
             {
-                list.add(I18n.format(Names.GuiElements.VAT_TANK_EMPTY));
+                list.add(I18n.format(Names.GuiElements.TANK_EMPTY));
             }
             this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
         }
 
-        // Render ECU Hover Text
+        // Render ECU_ACTIVE Hover Text
         if (mouseX > ecuX && mouseX < ecuX + ECU_WIDTH && mouseY > ecuY && mouseY < ecuY + ECU_HEIGHT)
         {
             if (tileEntityVat.hasECU())
             {
                 List<String> list = new ArrayList<String>();
-                list.add(I18n.format(Names.GuiElements.VAT_ECU));
+                list.add(I18n.format(Names.GuiElements.ECU_ACTIVE));
                 this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
             }
         }

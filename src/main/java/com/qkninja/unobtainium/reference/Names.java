@@ -24,7 +24,7 @@ public final class Names
         public static final String OIL_RESIN = "oilResin";
         public static final String PLASTIC = "plastic";
         public static final String FUSION_VAT = "fusionVat";
-        public static final String ECU = "ECU";
+        public static final String ECU = "ECU_ACTIVE";
         public static final String WATERJET = "waterjet";
         public static final String WATER_RECYCLER = "waterRecycler";
     }
@@ -81,24 +81,19 @@ public final class Names
 
     public static final class GuiElements
     {
-        public static final String VAT_TANK_STATS = "unobtainium.gui.fusionvat.tankstats";
-        public static final String VAT_TANK_EMPTY = "unobtainium.gui.fusionvat.tankempty";
-        public static final String VAT_ECU = "unobtainium.gui.fusionvat.ecu";
+        public static final String GUI_PREFIX = "unobtainium.gui.";
 
-        public static final String WATERJET_TANK_STATS = "unobtainium.gui.waterjet.tankstats";
-        public static final String WATERJET_TANK_EMPTY = "unobtainium.gui.waterjet.tankempty";
-        public static final String WATERJET_RECYCLER = "unobtainium.gui.waterjet.recycler";
+        public static final String TANK_AMOUNT = GUI_PREFIX + "tankamount";
+        public static final String TANK_EMPTY = GUI_PREFIX + "tankempty";
+        public static final String ECU_ACTIVE = GUI_PREFIX + "ecuactive";
+        public static final String RECYCLER_ACTIVE = GUI_PREFIX + "recycleractive";
     }
 
     public static final class Waila
     {
-        public static final String VAT_WAILA_PERCENT_FUSED = "unobtainium.waila.fusionvat.pfused";
-        public static final String VAT_WAILA_TANK_STATS = "unobtainium.waila.fusionvat.tankstats";
-        public static final String VAT_WAILA_TANK_EMPTY = "unobtainium.waila.fusionvat.tankempty";
-
-        public static final String WATERJET_WAILA_PERCENT_CUT = "unobtainium.waila.waterjet.pfused";
-        public static final String WATERJET_WAILA_RESERVOIR_STATS = "unobtainium.waila.waterjet.reservoirstats";
-        public static final String WATERJET_WAILA_BYPRODUCT_STATS = "unobtainium.waila.waterjet.byproductstats";
-//        public static final String VAT_WAILA_TANK_EMPTY = "unobtainium.waila.fusionvat.tankempty";
+        public static final String WAILA_PERCENT_FUSED = "unobtainium.waila.percentfused";
+        public static final String WAILA_TANK_STATS = "unobtainium.waila.tankstats";
+        public static final String WAILA_PERCENT_CUT = "unobtainium.waila.percentcut";
+        public static final String WAILA_RESERVOIR_STATS = "unobtainium.waila.reservoirstats";
     }
 }

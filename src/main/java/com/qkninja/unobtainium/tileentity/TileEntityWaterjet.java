@@ -2,6 +2,8 @@ package com.qkninja.unobtainium.tileentity;
 
 import com.qkninja.unobtainium.init.ModBlocks;
 import com.qkninja.unobtainium.item.crafting.WaterjetRecipe;
+import com.qkninja.unobtainium.reference.ConfigValues;
+import com.qkninja.unobtainium.reference.Messages;
 import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.utility.ByteBufHelper;
 import com.qkninja.unobtainium.utility.LogHelper;
@@ -11,6 +13,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -29,11 +32,11 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
      */
     private static final int[] slotsTopSides = new int[]{0};
     /**
-     * Solts that can be accessed from the bottom of the vat.
+     * Slots that can be accessed from the bottom of the vat.
      */
     private static final int[] slotsBottom = new int[]{1};
     private static final int TOTAL_BYPRODUCT_SPACE = 1000;
-    private static final int STANDARD_DRAIN_TICK = 1000;
+    private static final int STANDARD_DRAIN_TICK = ConfigValues.waterjetDrainTick;
     private FluidTank reservoir;
     private FluidTank byproduct;
     private ItemStack[] waterjetStacks = new ItemStack[2];
@@ -57,7 +60,7 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
             {
                 if (this.hasRecycler())
                 {
-                    this.reservoir.drain(STANDARD_DRAIN_TICK / 10, true);
+                    this.reservoir.drain(Math.round(STANDARD_DRAIN_TICK * ConfigValues.recyclermulitplier), true);
                 }
                 else
                 {
@@ -104,7 +107,12 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
 
     public boolean hasRecycler()
     {
-        return worldObj.getBlock(xCoord, yCoord - 1, zCoord).equals(ModBlocks.waterRecycler);
+        for (ForgeDirection d : ForgeDirection.VALID_DIRECTIONS)
+        {
+            if (worldObj.getBlock(xCoord + d.offsetX, yCoord + d.offsetY, zCoord + d.offsetZ).equals(ModBlocks.waterRecycler))
+                return true;
+        }
+        return false;
     }
 
     private int getRecipeLength()
@@ -128,6 +136,7 @@ public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedI
             waterjetStacks[0] = null;
 
         byproduct.fill(recipe.getOutputFluid(), true);
+        cutProgress = 0;
 
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }

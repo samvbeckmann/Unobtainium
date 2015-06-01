@@ -1,5 +1,7 @@
 package com.qkninja.unobtainium.handler;
 
+import com.qkninja.unobtainium.reference.ConfigValues;
+import com.qkninja.unobtainium.reference.Messages;
 import com.qkninja.unobtainium.reference.Reference;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -8,13 +10,12 @@ import java.io.File;
 
 /**
  * Sets up the configuration file.
- * <br>
- *     Currently unused in gameplay.
+ *
+ * @author QKninja
  */
 public class ConfigurationHandler
 {
     public static Configuration configuration;
-    public static boolean testValue = false;
 
     public static void init(File configFile)
     {
@@ -37,7 +38,10 @@ public class ConfigurationHandler
 
     private static void loadConfiguration()
     {
-        testValue = configuration.getBoolean("ConfigValue", Configuration.CATEGORY_GENERAL, false, "This is an example configuration value.");
+        ConfigValues.waterjetDrainTick = configuration.getInt(Messages.Configuration.WATERJET_DRAIN_TICK,
+                Configuration.CATEGORY_GENERAL, 1000, 1, Integer.MAX_VALUE, Messages.Configuration.WATERJET_DRAIN_TICK_DESCRIPTION);
+        ConfigValues.recyclermulitplier = configuration.getFloat(Messages.Configuration.RECYCLER_MULTIPLIER,
+                Configuration.CATEGORY_GENERAL, .1F, 0F, 1F, Messages.Configuration.RECYCLER_MULTIPLIER_DESCRIPTION);
 
         if (configuration.hasChanged())
         {

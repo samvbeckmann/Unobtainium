@@ -1,7 +1,6 @@
 package com.qkninja.unobtainium.thirdparty.waila;
 
 import com.qkninja.unobtainium.reference.Names;
-import com.qkninja.unobtainium.tileentity.TileEntityVat;
 import com.qkninja.unobtainium.tileentity.TileEntityWaterjet;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -16,7 +15,9 @@ import net.minecraft.world.World;
 import java.util.List;
 
 /**
- * Created by sam on 5/8/15.
+ * Handles the Waila tooltip for Waterjets
+ *
+ * @author QKninja
  */
 public class WailaWaterjetHandler implements IWailaDataProvider
 {
@@ -33,12 +34,15 @@ public class WailaWaterjetHandler implements IWailaDataProvider
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
         TileEntityWaterjet te = (TileEntityWaterjet) accessor.getTileEntity();
-        if (te.getCutProgress() != 0) // TODO Broken before GUI is opened
+        if (te.getCutProgress() != 0)
         {
-            currenttip.add(accessor.getNBTData().getInteger(PROGRESS) + I18n.format(Names.Waila.WATERJET_WAILA_PERCENT_CUT));
+            currenttip.add(accessor.getNBTData().getInteger(PROGRESS) + I18n.format(Names.Waila.WAILA_PERCENT_CUT));
         }
-        int tankAmount = accessor.getNBTData().getInteger(TANK_AMOUNT);
-        currenttip.add(I18n.format(Names.Waila.VAT_WAILA_TANK_STATS, tankAmount, accessor.getNBTData().getString(FLUID)));
+        int tankAmount = accessor.getNBTData().getInteger(RESERVOIR_AMOUNT);
+        currenttip.add(I18n.format(Names.Waila.WAILA_RESERVOIR_STATS, tankAmount));
+        int byProductAmount = accessor.getNBTData().getInteger(BYPRODUCT_AMOUNT);
+        if (byProductAmount != 0)
+            currenttip.add(I18n.format(Names.Waila.WAILA_TANK_STATS, byProductAmount, accessor.getNBTData().getString(BYPRODUCT_FLUID)));
 
         return currenttip;
     }
@@ -52,12 +56,18 @@ public class WailaWaterjetHandler implements IWailaDataProvider
     {
         TileEntityWaterjet tile = (TileEntityWaterjet) te;
         tag.setInteger(PROGRESS, tile.getCutProgressScaled(100));
-        tag.setInteger(TANK_AMOUNT, tile.getReservoirAmount());
-        tag.setString(FLUID, tile.getByproductFluid().getLocalizedName());
+        tag.setInteger(RESERVOIR_AMOUNT, tile.getReservoirAmount());
+        int byproductAmount = tile.getByproductAmount();
+        tag.setInteger(BYPRODUCT_AMOUNT, byproductAmount);
+        if (byproductAmount != 0)
+            tag.setString(BYPRODUCT_FLUID, tile.getByproductFluid().getLocalizedName());
+        else
+            tag.setString(BYPRODUCT_FLUID, "");
         return tag;
     }
 
     private static final String PROGRESS = "progress";
-    private static final String TANK_AMOUNT = "tankAmount";
-    private static final String FLUID = "fluid";
+    private static final String RESERVOIR_AMOUNT = "tankAmount";
+    private static final String BYPRODUCT_AMOUNT = "byproductAmount";
+    private static final String BYPRODUCT_FLUID = "fluid";
 }

@@ -36,12 +36,12 @@ public class WailaVatHandler implements IWailaDataProvider
         TileEntityVat te = (TileEntityVat) accessor.getTileEntity();
         if (te.isFusing())
         {
-            currenttip.add(accessor.getNBTData().getInteger(PROGRESS) + I18n.format(Names.Waila.VAT_WAILA_PERCENT_FUSED));
+            currenttip.add(accessor.getNBTData().getInteger(PROGRESS) + I18n.format(Names.Waila.WAILA_PERCENT_FUSED));
         }
         int tankAmount = accessor.getNBTData().getInteger(TANK_AMOUNT);
         if (tankAmount > 0)
         {
-            currenttip.add(I18n.format(Names.Waila.VAT_WAILA_TANK_STATS, tankAmount, accessor.getNBTData().getString(FLUID)));
+            currenttip.add(I18n.format(Names.Waila.WAILA_TANK_STATS, tankAmount, accessor.getNBTData().getString(FLUID)));
         }
         return currenttip;
     }

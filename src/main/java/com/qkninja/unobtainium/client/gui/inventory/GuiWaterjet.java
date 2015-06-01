@@ -82,10 +82,10 @@ public class GuiWaterjet extends GuiUnobtainium
             List<String> list = new ArrayList<String>();
             if (te.getReservoirAmount() != 0)
             {
-                list.add(I18n.format(Names.GuiElements.WATERJET_TANK_STATS, te.getReservoirAmount()));
+                list.add(I18n.format(Names.GuiElements.TANK_AMOUNT, te.getReservoirAmount()));
             } else
             {
-                list.add(I18n.format(Names.GuiElements.WATERJET_TANK_EMPTY));
+                list.add(I18n.format(Names.GuiElements.TANK_EMPTY));
             }
             this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
         }
@@ -98,10 +98,10 @@ public class GuiWaterjet extends GuiUnobtainium
             if (te.hasByproduct())
             {
                 list.add(te.getByproductFluid().getLocalizedName());
-                list.add(I18n.format(Names.GuiElements.WATERJET_TANK_STATS, te.getByproductAmount()));
+                list.add(I18n.format(Names.GuiElements.TANK_AMOUNT, te.getByproductAmount()));
             } else
             {
-                list.add(I18n.format(Names.GuiElements.VAT_TANK_EMPTY));
+                list.add(I18n.format(Names.GuiElements.TANK_EMPTY));
             }
             this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
         }
@@ -113,7 +113,7 @@ public class GuiWaterjet extends GuiUnobtainium
             if (te.hasRecycler())
             {
                 List<String> list = new ArrayList<String>();
-                list.add(I18n.format(Names.GuiElements.WATERJET_RECYCLER));
+                list.add(I18n.format(Names.GuiElements.RECYCLER_ACTIVE));
                 this.drawHoveringText(list, mouseX - k, mouseY - l, this.fontRendererObj);
             }
         }

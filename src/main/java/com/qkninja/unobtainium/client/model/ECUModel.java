@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 /**
- * ECU - QK ninja
+ * ECU_ACTIVE - QK ninja
  * Created using Tabula 4.1.1
  */
 public class ECUModel extends ModelBase {

@@ -3,7 +3,7 @@ package com.qkninja.unobtainium.tileentity;
 import net.minecraft.init.Blocks;
 
 /**
- * ECU speeds up various processes and can rapidly cool down materials.
+ * ECU_ACTIVE speeds up various processes and can rapidly cool down materials.
  */
 public class TileEntityECU extends TileEntityUnobtainium
 {

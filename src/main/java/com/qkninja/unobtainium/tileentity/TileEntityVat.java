@@ -11,6 +11,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
 /**
@@ -40,7 +41,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
     private ItemStack[] vatItemStacks = new ItemStack[3];
     public int vatCookTime;
     private static final int TOTAL_COOK_TIME = 1000;
-        private static final int TOTAL_TANK_SPACE = 1000;
+    private static final int TOTAL_TANK_SPACE = 1000;
 
     public TileEntityVat()
     {
@@ -329,7 +330,12 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
     public boolean hasECU()
     {
-        return worldObj.getBlock(xCoord, yCoord - 1, zCoord) == ModBlocks.externalCoolingUnit;
+        for (ForgeDirection d : ForgeDirection.VALID_DIRECTIONS)
+        {
+            if (worldObj.getBlock(xCoord + d.offsetX, yCoord + d.offsetY, zCoord + d.offsetZ).equals(ModBlocks.externalCoolingUnit))
+                return true;
+        }
+        return false;
     }
 
     @Override
