@@ -3,6 +3,7 @@ package com.qkninja.unobtainium.tileentity;
 import com.qkninja.unobtainium.init.ModBlocks;
 import com.qkninja.unobtainium.init.ModFluidBlocks;
 import com.qkninja.unobtainium.item.crafting.VatRecipe;
+import com.qkninja.unobtainium.reference.ConfigValues;
 import com.qkninja.unobtainium.reference.Names;
 import com.qkninja.unobtainium.utility.ByteBufHelper;
 import io.netty.buffer.ByteBuf;
@@ -40,8 +41,8 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
 
     private ItemStack[] vatItemStacks = new ItemStack[3];
     public int vatCookTime;
-    private static final int TOTAL_COOK_TIME = 1000;
-    private static final int TOTAL_TANK_SPACE = 1000;
+    private static final int TOTAL_COOK_TIME = ConfigValues.vatCookTime;
+    private static final int TOTAL_TANK_SPACE = ConfigValues.vatTankSize;
 
     public TileEntityVat()
     {
@@ -59,7 +60,7 @@ public class TileEntityVat extends TileEntityUnobtainium implements ISidedInvent
             if (this.canCombine())
             {
                 if (hasECU())
-                    this.vatCookTime += 5;
+                    this.vatCookTime += ConfigValues.ecuMulitplier;
                 else
                     ++this.vatCookTime;
 

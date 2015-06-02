@@ -6,6 +6,7 @@ import com.qkninja.unobtainium.reference.Reference;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.common.config.Configuration;
+
 import java.io.File;
 
 /**
@@ -42,6 +43,16 @@ public class ConfigurationHandler
                 Configuration.CATEGORY_GENERAL, 1000, 1, Integer.MAX_VALUE, Messages.Configuration.WATERJET_DRAIN_TICK_DESCRIPTION);
         ConfigValues.recyclermulitplier = configuration.getFloat(Messages.Configuration.RECYCLER_MULTIPLIER,
                 Configuration.CATEGORY_GENERAL, .1F, 0F, 1F, Messages.Configuration.RECYCLER_MULTIPLIER_DESCRIPTION);
+        ConfigValues.waterjetReservoirSize = configuration.getInt(Messages.Configuration.WATERJET_RESERVOIR_SIZE,
+                Configuration.CATEGORY_GENERAL, 50000, 1, Integer.MAX_VALUE, Messages.Configuration.WATERJET_RESERVOIR_SIZE_DESCRIPTION);
+        ConfigValues.waterjetByproductSize = configuration.getInt(Messages.Configuration.WATERJET_BYPRODUCT_SIZE,
+                Configuration.CATEGORY_GENERAL, 1000, 1, Integer.MAX_VALUE, Messages.Configuration.WATERJET_BYPRODUCT_SIZE_DESCRIPTION);
+        ConfigValues.vatCookTime = configuration.getInt(Messages.Configuration.VAT_COOK_TIME, Configuration.CATEGORY_GENERAL,
+                1000, 1, Integer.MAX_VALUE, Messages.Configuration.VAT_COOK_TIME_DESCRIPTION);
+        ConfigValues.vatTankSize = configuration.getInt(Messages.Configuration.VAT_TANK_SIZE,
+                Configuration.CATEGORY_GENERAL, 1000, 1, Integer.MAX_VALUE, Messages.Configuration.VAT_TANK_SIZE_DESCRIPTION);
+        ConfigValues.ecuMulitplier = configuration.getInt(Messages.Configuration.ECU_MULTIPLIER,
+                Configuration.CATEGORY_GENERAL, 5, 1, Integer.MAX_VALUE, Messages.Configuration.ECU_MULTIPLIER_DESCRIPTION);
 
         if (configuration.hasChanged())
         {

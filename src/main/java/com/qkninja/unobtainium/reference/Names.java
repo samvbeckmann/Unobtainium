@@ -24,7 +24,7 @@ public final class Names
         public static final String OIL_RESIN = "oilResin";
         public static final String PLASTIC = "plastic";
         public static final String FUSION_VAT = "fusionVat";
-        public static final String ECU = "ECU_ACTIVE";
+        public static final String ECU = "ECU";
         public static final String WATERJET = "waterjet";
         public static final String WATER_RECYCLER = "waterRecycler";
     }

@@ -26,16 +26,18 @@ import net.minecraftforge.fluids.FluidTank;
  */
 public class TileEntityWaterjet extends TileEntityUnobtainium implements ISidedInventory
 {
-    public static final int TOTAL_RESERVOIR_SPACE = 50000;
+    public static final int TOTAL_RESERVOIR_SPACE = ConfigValues.waterjetReservoirSize;
+
     /**
      * Slots that can be accessed from the top and sides of the vat.
      */
     private static final int[] slotsTopSides = new int[]{0};
+
     /**
      * Slots that can be accessed from the bottom of the vat.
      */
     private static final int[] slotsBottom = new int[]{1};
-    private static final int TOTAL_BYPRODUCT_SPACE = 1000;
+    private static final int TOTAL_BYPRODUCT_SPACE = ConfigValues.waterjetByproductSize;
     private static final int STANDARD_DRAIN_TICK = ConfigValues.waterjetDrainTick;
     private FluidTank reservoir;
     private FluidTank byproduct;
