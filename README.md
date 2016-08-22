@@ -3,4 +3,4 @@ Unobtainium
 
 Minecraft Mod based around impossible-to-obtain materials.
 
-**NOTE:** This mod is a work in progress, don't expect anything to work. I'll let you know when it does.
+**NOTE:** This mod was never released, is not maintained. It represents me messing around with Minecraft modding when I was first becoming familiar with the Minecraft codebase.
